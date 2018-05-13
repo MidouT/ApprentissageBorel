@@ -1,0 +1,58 @@
+[
+  {
+    "son": "i",
+    "graphie": [
+      "i",
+      "magna",
+      "amet"
+    ],
+    "chemin": "/image/default.png"
+  },
+  {
+    "son": "e",
+    "graphie": [
+      "e",
+      "et",
+      "er"
+    ],
+    "chemin": "/image/graphie1.png"
+  },
+  {
+    "son": "o",
+    "graphie": [
+      "o",
+      "au",
+      "eau",
+      "ot"
+    ],
+    "chemin": "/image/graphie1.png"
+  },
+  {
+    "son": "a",
+    "graphie": [
+      "a",
+      "at",
+      "as"
+    ],
+    "chemin": "/image/graphie2.png"
+  },
+  {
+    "son": "u",
+    "graphie": [
+      "u",
+      "us",
+      "ut"
+    ],
+    "chemin": "/image/graphie1.png"
+  },
+  {
+    "son": "a",
+    "graphie": [
+      "occaecat",
+      "anim",
+      "ad",
+      "culpa"
+    ],
+    "chemin": "/image/graphie2.png"
+  }
+]
