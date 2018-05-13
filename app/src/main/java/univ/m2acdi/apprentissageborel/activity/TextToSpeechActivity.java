@@ -7,6 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
@@ -15,9 +24,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
     private final int CHECK_CODE = 0x1;
     private final int SHORT_DURATION = 1000;
-    private Button readText;
-    private EditText textToRead;
 
+    private TextView textView;
     private TextSpeaker textSpeaker;
 
     @Override
@@ -25,11 +33,10 @@ public class TextToSpeechActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_to_speech);
 
-        readText = findViewById(R.id.read_text_btn);
-        readText.setOnClickListener(readListener);
+        textView = findViewById(R.id.word_text_view);
+        textView.setText(getRandomWordFromBaseFile());
 
         checkTTS();
-
     }
 
     /**
@@ -41,6 +48,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         startActivityForResult(intentCheck, CHECK_CODE);
     }
 
+    /*
     View.OnClickListener readListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -49,6 +57,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
             speakOut(text);
         }
     };
+    */
 
     @Override
     protected void onRestart() {
@@ -82,6 +91,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
     /**
      * Lecture du texte
+     *
      * @param text
      */
     private void speakOut(String text) {
@@ -89,6 +99,45 @@ public class TextToSpeechActivity extends AppCompatActivity {
             textSpeaker.speakText(text);
             textSpeaker.pause(SHORT_DURATION);
         }
+    }
+
+    private JSONArray readJsonWordFile() {
+
+        JSONArray jsonarray = null;
+
+        try {
+            InputStream stream = this.getAssets().open("word_file.json");
+            int size = stream.available();
+            byte[] byteArray = new byte[size];
+            stream.read(byteArray);
+            stream.close();
+            String jsonStr = new String(byteArray);
+
+            jsonarray = new JSONArray(jsonStr);
+
+            System.out.println("\n JsonObject success built !");
+        } catch (IOException ex) {
+            System.out.println("\n \n IOException !\n\n");
+            ex.printStackTrace();
+        } catch (JSONException ex) {
+            System.out.println("\n JSONException !\n\n");
+            ex.printStackTrace();
+        }
+        return jsonarray;
+    }
+
+    private String getRandomWordFromBaseFile(){
+        String word = "0";
+        System.out.println("\n Attempt to get JSON object !");
+        JSONArray jsonArray = readJsonWordFile();
+
+        try {
+            JSONObject jsonobject = jsonArray.getJSONObject(1);
+            word = jsonobject.getString("son");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return word;
     }
 
 }
