@@ -1,12 +1,16 @@
 package univ.m2acdi.apprentissageborel.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -15,9 +19,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
 public class TextToSpeechActivity extends AppCompatActivity {
@@ -25,16 +29,30 @@ public class TextToSpeechActivity extends AppCompatActivity {
     private final int CHECK_CODE = 0x1;
     private final int SHORT_DURATION = 1000;
 
+    private static int index = 0;
+
     private TextView textView;
+    private ImageView imageView;
+    private ImageButton imageButton;
+
     private TextSpeaker textSpeaker;
+    private BMObject wordObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_to_speech);
 
+        readNextWord();
+
         textView = findViewById(R.id.word_text_view);
-        textView.setText(getRandomWordFromBaseFile());
+        textView.setText(wordObject.getSon());
+
+        imageView = findViewById(R.id.word_img_view);
+        imageView.setImageDrawable(getImageViewByName(wordObject.getGeste()));
+
+        imageButton = findViewById(R.id.btn_next);
+        imageButton.setOnClickListener(onClickListener);
 
         checkTTS();
     }
@@ -89,6 +107,19 @@ public class TextToSpeechActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            readNextWord();
+
+            textView = findViewById(R.id.word_text_view);
+            textView.setText(wordObject.getSon());
+
+            imageView = findViewById(R.id.word_img_view);
+            imageView.setImageDrawable(getImageViewByName(wordObject.getGeste()));
+        }
+    };
+
     /**
      * Lecture du texte
      *
@@ -99,6 +130,20 @@ public class TextToSpeechActivity extends AppCompatActivity {
             textSpeaker.speakText(text);
             textSpeaker.pause(SHORT_DURATION);
         }
+    }
+
+    private Drawable getImageViewByName(String geste){
+
+        JSONArray jsonArray = readJsonWordFile();
+
+        int image_id = 0;
+
+        Context context = getApplicationContext();
+
+        image_id = context.getResources().getIdentifier(geste, "drawable", getPackageName());
+        System.out.println("\n Image ressource id: "+image_id);
+
+        return context.getResources().getDrawable(image_id);
     }
 
     private JSONArray readJsonWordFile() {
@@ -115,7 +160,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
             jsonarray = new JSONArray(jsonStr);
 
-            System.out.println("\n JsonObject success built !");
         } catch (IOException ex) {
             System.out.println("\n \n IOException !\n\n");
             ex.printStackTrace();
@@ -128,7 +172,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
     private String getRandomWordFromBaseFile(){
         String word = "0";
-        System.out.println("\n Attempt to get JSON object !");
         JSONArray jsonArray = readJsonWordFile();
 
         try {
@@ -138,6 +181,36 @@ public class TextToSpeechActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return word;
+    }
+
+    public void readNextWord(){
+
+        JSONArray jsonArray = readJsonWordFile();
+        JSONObject jsonobject;
+
+        String son;
+        String graphie;
+        String texte_ref;
+        String geste;
+
+        try {
+            jsonobject = jsonArray.getJSONObject(index);
+            son = jsonobject.getString("son");
+            graphie = jsonobject.getString("graphie");
+            texte_ref = jsonobject.getString("texte_ref");
+            geste = jsonobject.getString("geste");
+
+            wordObject = new BMObject(son, graphie, texte_ref, geste);
+        } catch (JSONException e) {
+
+        }
+
+        index++;
+
+        if(index == jsonArray.length()){
+            index = 0;
+        }
+
     }
 
 }
