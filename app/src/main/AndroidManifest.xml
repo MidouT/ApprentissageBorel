@@ -22,7 +22,8 @@
         <activity
             android:name=".activity.TextToSpeechActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.SectionIntroductActivity"></activity>
+        <activity android:name=".activity.SectionIntroductActivity" android:screenOrientation="landscape"></activity>
+        <activity android:name=".activity.GestureToSpeechActivity" android:screenOrientation="landscape"></activity>
     </application>
 
 
