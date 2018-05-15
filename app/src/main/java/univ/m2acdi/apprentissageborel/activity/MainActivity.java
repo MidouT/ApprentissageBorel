@@ -36,15 +36,17 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.F
 
     @Override
     public void onBtnClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
 
             case R.id.listen_btn:
-                Intent intent = new Intent(this, TextToSpeechActivity.class);
+                intent.setClass(this,TextToSpeechActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.what_about_btn:
-
+                intent.setClass(this,GestureToSpeechActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.gesture_order_btn:
