@@ -3,15 +3,16 @@ package univ.m2acdi.apprentissageborel.util;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 
+import java.io.Serializable;
 import java.util.Locale;
 
-public class TextSpeaker implements TextToSpeech.OnInitListener {
+public class TextSpeaker implements Serializable, TextToSpeech.OnInitListener {
 
 
     private static Locale language = Locale.FRANCE;
 
     private static TextToSpeech textToSpeech;
-    private boolean isReady = false;
+    private static boolean isReady = false;
 
     public TextSpeaker(Context context){
         textToSpeech = new TextToSpeech(context, this);
@@ -31,8 +32,12 @@ public class TextSpeaker implements TextToSpeech.OnInitListener {
 
     public void speakText(String text){
         if(isReady) {
-            textToSpeech.speak(text, TextToSpeech.QUEUE_ADD, null, null);
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
         }
+    }
+
+    public static boolean isReady() {
+        return isReady;
     }
 
     public void setSpeedRate(float speechrate) {
