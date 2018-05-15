@@ -2,5 +2,10 @@
     <string name="app_name">Apprentissage Borel</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="section_title_1">Écoute / Répétition</string>
+    <string name="section_title_2">Trouver le son du geste</string>
+    <string name="section_title_3">Ordonner selon le geste</string>
+    <string name="introduct_section_1">Section 1: Écoute et Répétition. Dans cette section, vous devez écoutez les son correspondants au lettres affichés et le geste associé</string>
+    <string name="introduct_section_2">Section 2: Trouver le son correspondant au geste. Dans cette section, je dois dire le son qui correspond au geste indiqué</string>
+    <string name="introduct_section_3">Section 3: Ordonner les lettres ou mot selon les geste. Dans cette section, je dois réordonner les lettres ou mots selon l\'ordre des gestes </string>
 </resources>
