@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.activity.GestureToSpeechActivity;
 import univ.m2acdi.apprentissageborel.activity.SectionIntroductActivity;
 import univ.m2acdi.apprentissageborel.activity.TextToSpeechActivity;
 
@@ -52,7 +53,7 @@ public class SectionIntroductFragment extends Fragment {
                     intent.setClass(getActivity().getBaseContext(), TextToSpeechActivity.class);
                     break;
                 case 2:
-                    
+                    intent.setClass(getActivity().getBaseContext(), GestureToSpeechActivity.class);
                     break;
                 case 3:
                     break;

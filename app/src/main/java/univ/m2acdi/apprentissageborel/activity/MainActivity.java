@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.F
 
     @Override
     public void onBtnClick(View view) {
+
         Intent intent = new Intent(this, SectionIntroductActivity.class);
         intent.putExtra("speaker", textSpeaker);
         switch (view.getId()) {
