@@ -4,6 +4,7 @@ package univ.m2acdi.apprentissageborel.fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -59,8 +60,20 @@ public class ListenSpeakOutFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         readNextWord();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //String text = textView.getText().toString();
+        //((TextToSpeechActivity) getActivity()).speakOutViewText(text);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     private JSONArray readJsonWordFile() {
@@ -130,5 +143,9 @@ public class ListenSpeakOutFragment extends Fragment {
         int image_id = context.getResources().getIdentifier(geste, "drawable", getActivity().getPackageName());
 
         return context.getResources().getDrawable(image_id);
+    }
+
+    public BMObject getWordObject() {
+        return wordObject;
     }
 }

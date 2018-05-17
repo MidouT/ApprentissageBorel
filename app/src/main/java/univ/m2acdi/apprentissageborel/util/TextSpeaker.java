@@ -36,9 +36,6 @@ public class TextSpeaker implements Serializable, TextToSpeech.OnInitListener {
         }
     }
 
-    public static boolean isReady() {
-        return isReady;
-    }
 
     public void setSpeedRate(float speechrate) {
         textToSpeech.setSpeechRate(speechrate);
