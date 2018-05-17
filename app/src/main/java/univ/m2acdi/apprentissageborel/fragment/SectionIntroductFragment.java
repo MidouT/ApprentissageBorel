@@ -2,6 +2,7 @@ package univ.m2acdi.apprentissageborel.fragment;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.activity.GestureToSpeechActivity;
 import univ.m2acdi.apprentissageborel.activity.SectionIntroductActivity;
 import univ.m2acdi.apprentissageborel.activity.TextToSpeechActivity;
+import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +50,8 @@ public class SectionIntroductFragment extends Fragment {
         public void onClick(View v) {
             Intent intent = new Intent();
             int section = getActivity().getIntent().getExtras().getInt("section");
+            TextSpeaker textSpeaker = (TextSpeaker) getActivity().getIntent().getSerializableExtra("speaker");
+            intent.putExtra("speaker", textSpeaker);
             switch (section){
                 case 1:
                     intent.setClass(getActivity().getBaseContext(), TextToSpeechActivity.class);

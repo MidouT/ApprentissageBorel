@@ -1,11 +1,13 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.fragment.SectionIntroductFragment;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
 public class SectionIntroductActivity extends Activity {
@@ -73,12 +75,6 @@ public class SectionIntroductActivity extends Activity {
     @Override
     protected void onStop() {
 
-        textSpeaker.destroy();
         super.onStop();
-    }
-
-
-    public int getSection() {
-        return section;
     }
 }
