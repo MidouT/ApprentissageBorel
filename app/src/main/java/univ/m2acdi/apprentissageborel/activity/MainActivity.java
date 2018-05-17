@@ -1,5 +1,6 @@
 package univ.m2acdi.apprentissageborel.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;

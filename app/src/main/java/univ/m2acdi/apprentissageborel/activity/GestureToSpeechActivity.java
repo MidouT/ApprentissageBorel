@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
@@ -37,6 +38,8 @@ public class GestureToSpeechActivity extends Activity {
     private static int indice = 0;
     private SpeechRecognizer speechRecognizer;
     private Intent intent;
+    private BMObject bm;
+    private Boolean flag;
 
 
     @Override
@@ -44,12 +47,60 @@ public class GestureToSpeechActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_to_speech);
         jsonArray = readJsonFile(this);
-        BMObject bm = initialisation(indice);
+        bm = readWord(indice);
+        flag = false;
         textView = findViewById(R.id.word_text_view);
         imageView = findViewById(R.id.word_img_view);
         imageView.setImageDrawable(this.getResources().getDrawable(this.getResources().getIdentifier(bm.getGeste(), "drawable", getPackageName())));
         imageButton = findViewById(R.id.btn_next);
         initVoiceRecognizer();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        imageButton.setEnabled(flag);
+        imageButton.setOnClickListener(onClickListener);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(indice == jsonArray.length()-1){
+                indice = 0;
+            }else{
+                ++indice;
+            }
+            textView.setText("");
+            bm = readWord(indice);
+            imageView.setImageDrawable(getApplicationContext().getResources().getDrawable(getApplicationContext().getResources().getIdentifier(bm.getGeste(), "drawable", getPackageName())));
+            flag = false;
+            imageButton.setEnabled(flag);
+        }
+    };
+
+    public BMObject readWord(int indice) {
+        JSONObject jsonObject = null;
+        BMObject bm = null;
+
+        try {
+            jsonObject = jsonArray.getJSONObject(indice);
+            String son = jsonObject.getString("son");
+            String graphie = jsonObject.getString("graphie");
+            String texte_ref = jsonObject.getString("texte_ref");
+            String geste = jsonObject.getString("geste");
+            bm = new BMObject(son,graphie,texte_ref,geste);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return bm;
     }
 
     /*
@@ -83,43 +134,6 @@ public class GestureToSpeechActivity extends Activity {
     /*
        Fin reconnaissance vocale
      */
-
-
-
-    public BMObject initialisation(int indice) {
-        JSONObject jsonObject = null;
-        BMObject bm = null;
-
-        try {
-            jsonObject = jsonArray.getJSONObject(indice);
-            String son = jsonObject.getString("son");
-            String graphie = jsonObject.getString("graphie");
-            String texte_ref = jsonObject.getString("texte_ref");
-            String geste = jsonObject.getString("geste");
-            bm = new BMObject(son,graphie,texte_ref,geste);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return bm;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        imageButton.setOnClickListener(onClickListener);
-    }
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if(indice == jsonArray.length()-1){
-                indice = 0;
-            }
-            BMObject bm = initialisation(indice++);
-            imageView.setImageDrawable(getApplicationContext().getResources().getDrawable(getApplicationContext().getResources().getIdentifier(bm.getGeste(), "drawable", getPackageName())));
-        }
-    };
 
     public JSONArray readJsonFile(Context context){
         String json = null;
@@ -158,8 +172,17 @@ public class GestureToSpeechActivity extends Activity {
         public void onResults(Bundle results) {
             String str = new String();
             Log.v(TAG, "onResults " + results);
-            ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             System.out.println("============= Reconnaissance ============");
+            ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            for(int i = 0; i < data.size(); i++){
+                if((data.get(i).equalsIgnoreCase(bm.getSon()) || (data.get(i).equals(bm.getSon().toUpperCase())))){
+                    flag = true;
+                    imageButton.setEnabled(flag);
+                    textView.setText(bm.getSon());
+                    break;
+                }
+            }
+
             for(int i = 0; i < data.size(); i++){
                 System.out.println(data.get(i));
             }
@@ -170,7 +193,6 @@ public class GestureToSpeechActivity extends Activity {
     }
 
     /*
-        Reconnaissance vocale
+        Fin Reconnaissance vocale
      */
-
 }
