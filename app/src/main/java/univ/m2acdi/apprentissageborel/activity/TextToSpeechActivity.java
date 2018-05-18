@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
     private static boolean isOk = false;
     private static int repeatCount = 0;
 
-    TTSpeechAsyncTask textSpeechTask;
+    private TTSpeechAsyncTask textSpeechTask;
 
     private ListenSpeakOutFragment lspFragment;
 
@@ -62,14 +63,12 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
         //speakOutViewText();
 
-        textSpeechTask = new TTSpeechAsyncTask();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        textSpeechTask = new TTSpeechAsyncTask();
         textSpeechTask.execute();
     }
 
@@ -99,41 +98,48 @@ public class TextToSpeechActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        final int CONTROL_CODE = 99;
+
         ArrayList<String> result = null;
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
                     speechTextCheickStatus.setImageDrawable(getImageViewByName("good"));
                     //txtSpeechCheick.setText(result.get(0));
                 }
+                repeatCount++;
                 break;
             }
-
+            case CONTROL_CODE:
+                break;
         }
-
-        repeatCount++;
-
-        Toast.makeText(getApplicationContext(), "ReapeatCount: "+repeatCount, Toast.LENGTH_LONG).show();
-
-        if (result != null) {
+        Toast.makeText(getApplicationContext(), "ReapeatCount: " + repeatCount, Toast.LENGTH_SHORT).show();
+        if (repeatCount != 2) {
             textSpeechTask = new TTSpeechAsyncTask();
             textSpeechTask.execute();
-            for (int i = 0; i < result.size(); i++) {
-                System.out.println("\n Sequence: " + result.get(i));
+        } else {
+
+            try {
+                SECONDS.sleep(3);
+                lspFragment = new ListenSpeakOutFragment();
+                setFragment(lspFragment);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }else {
-            textSpeechTask = new TTSpeechAsyncTask();
-            textSpeechTask.execute();
-        }
+            Intent intent = new Intent();
+            try {
+                startActivityForResult(intent, CONTROL_CODE);
+            } catch (ActivityNotFoundException aex) {
+                Toast.makeText(getApplicationContext(), "Intent fictif", Toast.LENGTH_SHORT).show();
+            }
 
-        if (repeatCount == 2) {
             isOk = true;
             repeatCount = 0;
-            lspFragment = new ListenSpeakOutFragment();
-            setFragment(lspFragment);
+
+
         }
+
 
     }
 
@@ -196,7 +202,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(getApplicationContext(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -214,8 +220,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            //Toast.makeText(getApplicationContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_LONG).show();
             promptSpeechInput();
+            Toast.makeText(getApplicationContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
         }
 
     }

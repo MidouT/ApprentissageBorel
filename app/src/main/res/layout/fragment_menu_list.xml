@@ -12,27 +12,47 @@
     tools:context=".fragment.MenuListFragment">
 
 
-    <Button
-        android:id="@+id/listen_btn"
+    <view
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:drawableLeft="@drawable/listen_speak"
-        android:text="Écoute et Répétition" />
+        android:layout_height="420dp"
+        android:layout_weight="3"/>
 
-    <Button
-        android:id="@+id/what_about_btn"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/speak"
-        android:text="Quelle est le son ?" />
+        android:paddingVertical="45dp"
+        android:layout_weight="4">
 
-    <Button
-        android:id="@+id/gesture_order_btn"
+        <ImageButton
+            android:id="@+id/listen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/what_about_btn"
+            android:src="@drawable/listen_speak" />
+
+        <ImageButton
+            android:id="@+id/what_about_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/find_sign_word" />
+
+        <ImageButton
+            android:id="@+id/gesture_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/what_about_btn"
+            android:src="@drawable/listen_speak" />
+
+    </RelativeLayout>
+
+    <view
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/gesture"
-        android:text="Ordonner selon le geste" />
+        android:layout_height="320dp"
+        android:layout_weight="3"
+        android:background="#FF1122"/>
 
 </LinearLayout>
 
