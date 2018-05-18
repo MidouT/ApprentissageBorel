@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.io.Serializable;
 
 import univ.m2acdi.apprentissageborel.fragment.MenuListFragment;
