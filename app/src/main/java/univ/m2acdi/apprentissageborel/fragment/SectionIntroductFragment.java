@@ -1,6 +1,7 @@
 package univ.m2acdi.apprentissageborel.fragment;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,8 @@ public class SectionIntroductFragment extends Fragment {
     private TextView sectionIntroductTitle;
     private ImageButton sectionStartBtn;
 
+    private SectionStartListener sectionStartListener;
+
 
     public SectionIntroductFragment() {
         // Required empty public constructor
@@ -45,27 +48,23 @@ public class SectionIntroductFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof SectionStartListener) {
+            sectionStartListener = (SectionStartListener) activity;
+        } else {
+            throw new ClassCastException(activity.toString() + " don't implement appropriate listener");
+        }
+    }
+
+    /**
+     * Instance listener
+     */
     View.OnClickListener sectionStartBtnClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            int section = getActivity().getIntent().getExtras().getInt("section");
-            TextSpeaker textSpeaker = (TextSpeaker) getActivity().getIntent().getSerializableExtra("speaker");
-            intent.putExtra("speaker", textSpeaker);
-            switch (section){
-                case 1:
-                    intent.setClass(getActivity().getBaseContext(), TextToSpeechActivity.class);
-                    break;
-                case 2:
-                    intent.setClass(getActivity().getBaseContext(), GestureToSpeechActivity.class);
-                    break;
-                case 3:
-                    break;
-                default:
-                    intent.setClass(getActivity().getBaseContext(), SectionIntroductActivity.class);
-                    break;
-            }
-            startActivity(intent);
+        public void onClick(View view) {
+            sectionStartListener.onSectionButtonClick(view);
         }
     };
 
@@ -87,5 +86,9 @@ public class SectionIntroductFragment extends Fragment {
                 default:
                     sectionIntroductTitle.setText(getResources().getString(R.string.app_name));
             }
+    }
+
+    public interface SectionStartListener{
+        void onSectionButtonClick(View view);
     }
 }

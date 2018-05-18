@@ -2,6 +2,7 @@ package univ.m2acdi.apprentissageborel.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import java.io.InputStream;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
+import univ.m2acdi.apprentissageborel.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +35,10 @@ public class ListenSpeakOutFragment extends Fragment {
     private TextView textView;
     private ImageView imageView;
 
-    private BMObject wordObject;
+    private BMObject bmObject;
+    private static JSONArray jsonArray;
+
+    private Intent activityIntent;
 
 
     public ListenSpeakOutFragment() {
@@ -48,10 +53,10 @@ public class ListenSpeakOutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_listen_speak_out, container, false);
 
         textView = view.findViewById(R.id.word_text_view);
-        textView.setText(wordObject.getSon());
+        textView.setText(bmObject.getSon());
 
         imageView = view.findViewById(R.id.word_img_view);
-        imageView.setImageDrawable(getImageViewByName(wordObject.getGeste()));
+        imageView.setImageDrawable(getImageViewByName(bmObject.getGeste()));
 
         return view;
     }
@@ -60,14 +65,18 @@ public class ListenSpeakOutFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        activityIntent = getActivity().getIntent();
+        jsonArray = Util.getJsonArrayDataFromIntent(activityIntent, "jsonArray");
         readNextWord();
     }
+
+
 
     @Override
     public void onStart() {
         super.onStart();
-        //String text = textView.getText().toString();
-        //((TextToSpeechActivity) getActivity()).speakOutViewText(text);
+        readNextWord();
     }
 
     @Override
@@ -76,58 +85,13 @@ public class ListenSpeakOutFragment extends Fragment {
 
     }
 
-    private JSONArray readJsonWordFile() {
-
-        JSONArray jsonarray = null;
-
-        try {
-            InputStream stream = getActivity().getAssets().open("word_file.json");
-            int size = stream.available();
-            byte[] byteArray = new byte[size];
-            stream.read(byteArray);
-            stream.close();
-            String jsonStr = new String(byteArray);
-
-            jsonarray = new JSONArray(jsonStr);
-
-        } catch (IOException ex) {
-            System.out.println("\n \n IOException !\n\n");
-            ex.printStackTrace();
-        } catch (JSONException ex) {
-            System.out.println("\n JSONException !\n\n");
-            ex.printStackTrace();
-        }
-        return jsonarray;
-    }
-
     public void readNextWord() {
 
-        JSONArray jsonArray = readJsonWordFile();
-        JSONObject jsonobject;
-
-        String son;
-        String graphie;
-        String texte_ref;
-        String geste;
-
-        try {
-            jsonobject = jsonArray.getJSONObject(index);
-            son = jsonobject.getString("son");
-            graphie = jsonobject.getString("graphie");
-            texte_ref = jsonobject.getString("texte_ref");
-            geste = jsonobject.getString("geste");
-
-            wordObject = new BMObject(son, graphie, texte_ref, geste);
-        } catch (JSONException e) {
-
-        }
-
+        bmObject = Util.readNextWord(jsonArray, index);
         index++;
-
         if (index == jsonArray.length()) {
             index = 0;
         }
-
     }
 
     /**
@@ -143,9 +107,5 @@ public class ListenSpeakOutFragment extends Fragment {
         int image_id = context.getResources().getIdentifier(geste, "drawable", getActivity().getPackageName());
 
         return context.getResources().getDrawable(image_id);
-    }
-
-    public BMObject getWordObject() {
-        return wordObject;
     }
 }
