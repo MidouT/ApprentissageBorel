@@ -1,11 +1,19 @@
 package univ.m2acdi.apprentissageborel.activity;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import univ.m2acdi.apprentissageborel.R;
@@ -13,16 +21,37 @@ import univ.m2acdi.apprentissageborel.fragment.MenuListFragment;
 import univ.m2acdi.apprentissageborel.fragment.WelcomeFragment;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
-public class MainActivity extends AppCompatActivity implements WelcomeFragment.FragmentTransactionListener, MenuListFragment.BtnClickListener {
+public class MainActivity extends Activity implements AppCompatCallback, MenuListFragment.BtnClickListener {
 
     private final int CHECK_CODE = 0x1;
 
     private TextSpeaker textSpeaker;
 
+    private AppCompatDelegate delegate;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //let's create the delegate, passing the activity at both arguments
+        delegate = AppCompatDelegate.create(this, this);
+
+        //the installViewFactory method replaces the default widgets
+        //with the AppCompat-tinted versions
+        delegate.installViewFactory();
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //we need to call the onCreate() of the AppCompatDelegate
+        delegate.onCreate(savedInstanceState);
+
+        //we use the delegate to inflate the layout
+        delegate.setContentView(R.layout.activity_main);
+
+        //Finally, let's add the Toolbar
+        Toolbar toolbar= findViewById(R.id.my_awesome_toolbar);
+        delegate.setSupportActionBar(toolbar);
+
 
         checkTTS();
 
@@ -30,13 +59,15 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.F
     }
 
     @Override
-    public void onStartImageLinkClick() {
-        showFragment(new MenuListFragment());
+    protected void onStart() {
+        super.onStart();
     }
 
-    void showFragment(Fragment fragment){
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    public void showFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.fragmentContainer, fragment, null);
         ft.commit();
     }
@@ -91,6 +122,28 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.F
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onRestart() {
         super.onRestart();
         //Toast.makeText(this, null, Toast.LENGTH_SHORT).show();
@@ -98,4 +151,19 @@ public class MainActivity extends AppCompatActivity implements WelcomeFragment.F
     }
 
 
+    @Override
+    public void onSupportActionModeStarted(ActionMode mode) {
+
+    }
+
+    @Override
+    public void onSupportActionModeFinished(ActionMode mode) {
+
+    }
+
+    @Nullable
+    @Override
+    public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
+        return null;
+    }
 }

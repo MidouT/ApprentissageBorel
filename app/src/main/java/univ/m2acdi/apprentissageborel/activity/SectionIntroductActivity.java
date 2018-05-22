@@ -1,28 +1,21 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import univ.m2acdi.apprentissageborel.R;
-import univ.m2acdi.apprentissageborel.fragment.SectionIntroductFragment;
-import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
-public class SectionIntroductActivity extends Activity implements SectionIntroductFragment.SectionStartListener {
+public class SectionIntroductActivity extends Activity {
 
     private final int SHORT_DURATION = 1000;
     private int section;
@@ -45,15 +38,9 @@ public class SectionIntroductActivity extends Activity implements SectionIntrodu
 
     }
 
-
-
-    View.OnClickListener readListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //speakOut();
-        }
-    };
-
+    /**
+     * Méthode permettant de déterminer le titre de la section a afficher
+     */
     private void introductSection() {
 
         String text = "";
@@ -122,11 +109,9 @@ public class SectionIntroductActivity extends Activity implements SectionIntrodu
     }
 
     /**
-     * Définition de la méthode du listener
-     * @param view
+     *
      */
-    @Override
-    public void onSectionButtonClick(View view) {
+    public void goToSection(){
         Intent intent = new Intent();
         int section = getIntent().getExtras().getInt("section");
         TextSpeaker textSpeaker = (TextSpeaker)getIntent().getSerializableExtra("speaker");
@@ -142,7 +127,7 @@ public class SectionIntroductActivity extends Activity implements SectionIntrodu
             case 3:
                 break;
             default:
-                intent.setClass(this, SectionIntroductActivity.class);
+                //intent.setClass(this, SectionIntroductActivity.class);
                 break;
         }
         startActivity(intent);

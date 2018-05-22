@@ -7,6 +7,13 @@
     android:layout_marginRight="@dimen/dim_horizontal_margin"
     tools:context=".activity.MainActivity" >
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_awesome_toolbar"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/abc_action_bar_default_height_material"
+        android:background="?attr/colorPrimary" />
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="wrap_content"
