@@ -1,5 +1,9 @@
 package univ.m2acdi.apprentissageborel.activity;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +26,7 @@ import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class TextToSpeechActivity extends AppCompatActivity {
+public class TextToSpeechActivity extends Activity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int SHORT_DURATION = 1000;
@@ -153,7 +153,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
     void setFragment(Fragment fragment) {
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.lspFragmentContainer, fragment, null);
         ft.commit();
     }

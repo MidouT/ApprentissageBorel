@@ -1,13 +1,14 @@
 package univ.m2acdi.apprentissageborel.fragment;
 
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import univ.m2acdi.apprentissageborel.R;
 
@@ -17,9 +18,9 @@ import univ.m2acdi.apprentissageborel.R;
  */
 public class MenuListFragment extends Fragment {
 
-    private Button listen_btn;
-    private Button what_about_btn;
-    private Button gesture_order_btn;
+    private ImageButton listen_btn;
+    private ImageButton what_about_btn;
+    private ImageButton gesture_order_btn;
     private BtnClickListener myListener;
 
     public MenuListFragment() {
@@ -44,12 +45,12 @@ public class MenuListFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof BtnClickListener) {
-            myListener = (BtnClickListener) context;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof BtnClickListener) {
+            myListener = (BtnClickListener) activity;
         } else {
-            throw new ClassCastException(context.toString() + " don't implement appropriate listener");
+            throw new ClassCastException(activity.toString() + " don't implement appropriate listener");
         }
     }
 
