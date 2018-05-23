@@ -47,7 +47,7 @@ public class GestureToSpeechActivity extends Activity {
         bmObject = Util.readNextWord(jsonArray, index);
         textView = findViewById(R.id.word_text_view);
         imageView = findViewById(R.id.word_img_view);
-        imageView.setImageDrawable(this.getResources().getDrawable(this.getResources().getIdentifier(bmObject.getGeste(), "drawable", getPackageName())));
+        imageView.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getGeste()));
         imageButton = findViewById(R.id.btn_next);
 
         initVoiceRecognizer();
@@ -76,7 +76,7 @@ public class GestureToSpeechActivity extends Activity {
             }
             textView.setText("");
             bmObject = Util.readNextWord(jsonArray, index);
-            imageView.setImageDrawable(getApplicationContext().getResources().getDrawable(getApplicationContext().getResources().getIdentifier(bmObject.getGeste(), "drawable", getPackageName())));
+            imageView.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getGeste()));
             flag = false;
             imageButton.setEnabled(flag);
         }

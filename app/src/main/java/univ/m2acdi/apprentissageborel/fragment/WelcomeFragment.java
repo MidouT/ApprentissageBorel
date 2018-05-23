@@ -40,7 +40,7 @@ public class WelcomeFragment extends Fragment {
 
                 }
             }
-        }, 7000);
+        }, 5000);
 
         return view;
     }

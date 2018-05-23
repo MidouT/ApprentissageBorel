@@ -1,10 +1,15 @@
 package univ.m2acdi.apprentissageborel.util;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Util {
 
@@ -16,18 +21,18 @@ public class Util {
      */
     public static BMObject readNextWord(JSONArray jsonArray, int index){
 
-        BMObject wordObject = new BMObject();
+        BMObject bmObject = new BMObject();
         try {
-            JSONObject jsonobject = jsonArray.getJSONObject(index);
-            wordObject.setSon(jsonobject.getString("son"));
-            wordObject.setGraphie(jsonobject.getString("graphie"));
-            wordObject.setTexte_ref(jsonobject.getString("texte_ref"));
-            wordObject.setGeste(jsonobject.getString("geste"));
+            JSONObject jsonObject = jsonArray.getJSONObject(index);
+            bmObject.setSon(jsonObject.getString("son"));
+            bmObject.setGraphie(jsonObject.getString("graphie"));
+            bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
+            bmObject.setGeste(jsonObject.getString("geste"));
         } catch (JSONException e) {
 
         }
 
-        return wordObject;
+        return bmObject;
     }
 
     /**
@@ -47,5 +52,45 @@ public class Util {
             e.printStackTrace();
         }
         return jsArray;
+    }
+
+    /**
+     * Méthode de lecture du fichier de données
+     *
+     * Initialise la liste de données (tableau JSON)
+     * @param context
+     * @return
+     */
+    public static JSONArray readJsonDataFile(Context context, String filename){
+        JSONArray jsonArray = null;
+        String jsonStr;
+        try {
+            InputStream is = context.getAssets().open(filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            jsonStr = new String(buffer, "UTF-8");
+            jsonArray = new JSONArray(jsonStr);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+
+    /**
+     * Récupère une image (Objet Drawable)
+     *
+     * @param geste
+     * @return
+     */
+    public static Drawable getImageViewByName(Context context, String geste) {
+
+        int image_id = context.getResources().getIdentifier(geste, "drawable", context.getPackageName());
+
+        return context.getResources().getDrawable(image_id);
     }
 }
