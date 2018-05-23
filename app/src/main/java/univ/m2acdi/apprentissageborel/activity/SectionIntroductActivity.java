@@ -125,6 +125,7 @@ public class SectionIntroductActivity extends Activity {
                 intent.setClass(this, GestureToSpeechActivity.class);
                 break;
             case 3:
+                intent.setClass(this, OrderGestActivity.class);
                 break;
             default:
                 //intent.setClass(this, SectionIntroductActivity.class);

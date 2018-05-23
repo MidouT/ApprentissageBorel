@@ -30,6 +30,9 @@
         <activity
             android:name=".activity.GestureToSpeechActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.OrderGestActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
