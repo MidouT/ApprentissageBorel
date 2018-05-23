@@ -30,14 +30,11 @@
         <activity
             android:name=".activity.GestureToSpeechActivity"
             android:screenOrientation="landscape" />
-
-
-=======
         <activity
             android:name=".activity.OrderGestActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".activity.DataConfigActivity"></activity>
->>>>>>> upstream/master
+
     </application>
 
 </manifest>
