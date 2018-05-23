@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
+import univ.m2acdi.apprentissageborel.util.Util;
 
 public class SectionIntroductActivity extends Activity {
 
@@ -34,7 +35,7 @@ public class SectionIntroductActivity extends Activity {
         Toast.makeText(this, "Section" + section, Toast.LENGTH_SHORT).show();
 
         introductSection();
-        jsonArray = readJsonDataFile(this);
+        jsonArray = Util.readJsonDataFile(this, "word_file.json");
 
     }
 
@@ -80,32 +81,6 @@ public class SectionIntroductActivity extends Activity {
     protected void onStop() {
 
         super.onStop();
-    }
-
-    /**
-     * Méthode de lecture du fichier de données
-     *
-     * Initialise la liste de données (tableau JSON)
-     * @param context
-     * @return
-     */
-    public JSONArray readJsonDataFile(Context context){
-        String jsonStr;
-        try {
-            InputStream is = context.getAssets().open("word_file.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, "UTF-8");
-            jsonArray = new JSONArray(jsonStr);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonArray;
     }
 
     /**

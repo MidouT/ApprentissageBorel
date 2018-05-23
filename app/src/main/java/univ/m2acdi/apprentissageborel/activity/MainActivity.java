@@ -27,32 +27,27 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
 
     private TextSpeaker textSpeaker;
 
-    private AppCompatDelegate delegate;
+    private AppCompatDelegate appCompatDelegate; //Pour la gestion de la barre d'outils et de l'"Action Button"
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //let's create the delegate, passing the activity at both arguments
-        delegate = AppCompatDelegate.create(this, this);
+        //création de l'instance
+        appCompatDelegate = AppCompatDelegate.create(this, this);
 
-        //the installViewFactory method replaces the default widgets
-        //with the AppCompat-tinted versions
-        delegate.installViewFactory();
-
+        appCompatDelegate.installViewFactory();
         super.onCreate(savedInstanceState);
+        //On appel aussi la méthode onCreate du 'Delegate'
+        appCompatDelegate.onCreate(savedInstanceState);
+        //Inflation du layout avec Delegate
+        appCompatDelegate.setContentView(R.layout.activity_main);
 
-        //we need to call the onCreate() of the AppCompatDelegate
-        delegate.onCreate(savedInstanceState);
+        //Ajout de la barre d'outils
+        Toolbar toolbar= findViewById(R.id.toolbar_main);
+        appCompatDelegate.setSupportActionBar(toolbar);
 
-        //we use the delegate to inflate the layout
-        delegate.setContentView(R.layout.activity_main);
-
-        //Finally, let's add the Toolbar
-        Toolbar toolbar= findViewById(R.id.my_awesome_toolbar);
-        delegate.setSupportActionBar(toolbar);
-
-
+        //Vérification des paramètres d'initialisation nécessaires à la synthèse vocale
         checkTTS();
 
         showFragment(new WelcomeFragment());
@@ -64,6 +59,10 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
     }
 
 
+    /**
+     * Permet de gérer les transitions de fragment
+     * @param fragment
+     */
     public void showFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -96,6 +95,9 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
         startActivity(intent);
     }
 
+    /**
+     *
+     */
     private void checkTTS(){
         Intent checkIntent = new Intent();
         checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
@@ -123,20 +125,20 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflation du menu
+        // Ajoute les items a la barre de menu
         getMenuInflater().inflate(R.menu.activity_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, DataConfigActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -146,7 +148,6 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
     @Override
     public void onRestart() {
         super.onRestart();
-        //Toast.makeText(this, null, Toast.LENGTH_SHORT).show();
         checkTTS();
     }
 

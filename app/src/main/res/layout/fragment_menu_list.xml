@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/dim_vertical_margin"
-    android:paddingLeft="@dimen/dim_horizontal_margin"
-    android:paddingRight="@dimen/dim_horizontal_margin"
-    android:paddingTop="@dimen/dim_vertical_margin"
-    tools:context=".fragment.MenuListFragment">
-
-    <Space
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"/>
+        android:paddingTop="200dp"
+        tools:context=".fragment.MenuListFragment">
+        <TableRow>
+            <ImageButton
+                android:id="@+id/listen_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/what_about_btn"
+                android:scaleType="fitXY"
+                android:src="@drawable/menu_item_1" />
+            <ImageButton
+                android:id="@+id/what_about_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/menu_item_2" />
+            <ImageButton
+                android:id="@+id/gesture_order_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/what_about_btn"
+                android:scaleType="fitXY"
+                android:src="@drawable/menu_item_3" />
 
+        </TableRow>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ecoute et Répétition"
+                android:textSize="30sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Trouve les lettres"
+                android:textSize="30sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ordonne les lettres"
+                android:textSize="30sp"/>
+        </TableRow>
 
-        <ImageButton
-            android:id="@+id/listen_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/what_about_btn"
-            android:scaleType="fitXY"
-            android:src="@drawable/listen_speak" />
+    </TableLayout>
 
-        <ImageButton
-            android:id="@+id/what_about_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:layout_centerHorizontal="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/find_sign_word" />
-
-        <ImageButton
-            android:id="@+id/gesture_order_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/what_about_btn"
-            android:scaleType="fitXY"
-            android:src="@drawable/listen_speak" />
-
-    </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4"/>
-
-</LinearLayout>
 

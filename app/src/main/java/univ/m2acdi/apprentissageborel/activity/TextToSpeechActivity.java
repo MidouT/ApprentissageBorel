@@ -23,6 +23,7 @@ import java.util.Locale;
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.ListenSpeakOutFragment;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
+import univ.m2acdi.apprentissageborel.util.Util;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -105,7 +106,7 @@ public class TextToSpeechActivity extends Activity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    speechTextCheickStatus.setImageDrawable(getImageViewByName("good"));
+                    speechTextCheickStatus.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "good"));
                     //txtSpeechCheick.setText(result.get(0));
                 }
                 repeatCount++;
@@ -114,7 +115,6 @@ public class TextToSpeechActivity extends Activity {
             case CONTROL_CODE:
                 break;
         }
-        Toast.makeText(getApplicationContext(), "ReapeatCount: " + repeatCount, Toast.LENGTH_SHORT).show();
         if (repeatCount != 2) {
             textSpeechTask = new TTSpeechAsyncTask();
             textSpeechTask.execute();
@@ -131,7 +131,7 @@ public class TextToSpeechActivity extends Activity {
             try {
                 startActivityForResult(intent, CONTROL_CODE);
             } catch (ActivityNotFoundException aex) {
-                Toast.makeText(getApplicationContext(), "Intent fictif", Toast.LENGTH_SHORT).show();
+                aex.printStackTrace();
             }
 
             isOk = true;
@@ -182,22 +182,9 @@ public class TextToSpeechActivity extends Activity {
 
     }
 
-
     /**
-     * Récupère une image (Objet Drawable)
-     *
-     * @param geste
-     * @return
+     * Classe de gestion asynchrone de la synthèse vocale
      */
-    private Drawable getImageViewByName(String geste) {
-
-        Context context = getApplicationContext();
-
-        int image_id = context.getResources().getIdentifier(geste, "drawable", getPackageName());
-
-        return context.getResources().getDrawable(image_id);
-    }
-
     private class TTSpeechAsyncTask extends AsyncTask<Void, Boolean, Void> {
 
         @Override
@@ -222,7 +209,6 @@ public class TextToSpeechActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             promptSpeechInput();
-            Toast.makeText(getApplicationContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
         }
 
     }
