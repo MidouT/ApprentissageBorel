@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dim_vertical_margin"
+    android:layout_marginLeft="@dimen/dim_horizontal_margin"
+    android:layout_marginRight="@dimen/dim_horizontal_margin"
+    tools:context=".activity.DataConfigActivity">
+
+    <TextView
+        android:id="@+id/data_config_view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="App data config view title"
+        android:textColor="#5577FF"
+        android:textSize="30dp"/>
+
+    <ListView
+        android:id="@+id/data_config_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#d46321"
+        android:dividerHeight="3dp"
+        android:background="@drawable/listview_border"
+        android:layout_below="@id/data_config_view_title">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/data_config_addNew_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Nouveau"/>
+
+</RelativeLayout>

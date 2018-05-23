@@ -50,7 +50,7 @@ public class ListenSpeakOutFragment extends Fragment {
         textView.setText(bmObject.getSon());
 
         imageView = view.findViewById(R.id.word_img_view);
-        imageView.setImageDrawable(getImageViewByName(bmObject.getGeste()));
+        imageView.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
 
         return view;
     }
@@ -86,20 +86,5 @@ public class ListenSpeakOutFragment extends Fragment {
         if (index == jsonArray.length()) {
             index = 0;
         }
-    }
-
-    /**
-     * Récupère une image (Objet Drawable)
-     *
-     * @param geste
-     * @return
-     */
-    private Drawable getImageViewByName(String geste) {
-
-        Context context = getActivity().getApplicationContext();
-
-        int image_id = context.getResources().getIdentifier(geste, "drawable", getActivity().getPackageName());
-
-        return context.getResources().getDrawable(image_id);
     }
 }
