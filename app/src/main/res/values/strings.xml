@@ -1,13 +1,16 @@
 <resources>
     <string name="app_name">Apprentissage Borel</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="section_title_1">Écoute / Répétition</string>
     <string name="section_title_2">Trouver le son du geste</string>
     <string name="section_title_3">Ordonner selon le geste</string>
+
     <string name="introduct_section_1">Section 1: Écoute et Répétition. </string>
     <string name="introduct_section_2">Section 2: Trouver le son correspondant au geste.</string>
     <string name="introduct_section_3">Section 3: Ordonner les lettres ou mot selon les geste.</string>
-    <string name="title_activity_floatting_action_button">FloattingActionButtonActivity</string>
-    <string name="title_activity_fab">FABActivity</string>
+
+    <string name="action_settings">Paramètres</string>
+    <string name="action_help">Aide</string>
+    <string name="action_about">A propos</string>
+
 </resources>
