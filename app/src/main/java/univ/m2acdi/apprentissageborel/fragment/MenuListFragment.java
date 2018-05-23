@@ -3,11 +3,11 @@ package univ.m2acdi.apprentissageborel.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import univ.m2acdi.apprentissageborel.R;
