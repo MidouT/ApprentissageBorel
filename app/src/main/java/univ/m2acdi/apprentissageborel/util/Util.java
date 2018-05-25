@@ -93,4 +93,22 @@ public class Util {
 
         return context.getResources().getDrawable(image_id);
     }
+
+    /**
+    * Recupere le bm object d'un son passer en parametre
+    *
+     * @param jsonArray
+     * @param son
+     * @return
+    * */
+    public static BMObject getWordObject(JSONArray jsonArray, String son){
+        BMObject bm=null;
+        for(int i=0; i<jsonArray.length();i++) {
+            bm=Util.readNextWord(jsonArray, i);
+            if(bm.getSon().toString().equals(son.toString()))
+                return bm;
+        }
+        bm=null;
+        return bm;
+    }
 }

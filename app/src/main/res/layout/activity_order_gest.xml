@@ -21,38 +21,25 @@
             android:textSize="@dimen/dim_text_size_big"/>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/find_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="5">
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/image_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="9">
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="1">
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp" />
-
-                <TextView
-                    android:id="@+id/text1"
-                    android:gravity="right"
-                    android:padding="3dip"
-                    android:text="" />
-            </TableRow>
+        android:layout_weight="5">
 
 
-        </TableLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
