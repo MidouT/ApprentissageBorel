@@ -48,7 +48,7 @@ public class BMObjectAdapter extends ArrayAdapter<BMObject> {
         tvSon = myView.findViewById(R.id.raw_word_textView);
         tvSon.setText(bmObject.getSon());
         tvGraphie = myView.findViewById(R.id.raw_graphie_textView);
-        tvGraphie.setText(bmObject.getGraphie());
+        tvGraphie.setText(Util.getFormatedGraphieStr(bmObject.getGraphie()));
         tvRefText = myView.findViewById(R.id.raw_refText_textView);
         tvRefText.setText(bmObject.getTexte_ref());
         ivGeste = myView.findViewById(R.id.raw_geste_imageView);

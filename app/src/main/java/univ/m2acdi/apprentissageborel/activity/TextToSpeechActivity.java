@@ -5,9 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -31,12 +29,12 @@ public class TextToSpeechActivity extends Activity {
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int SHORT_DURATION = 1000;
-    private ImageButton speechBtnPrompt;
-    private ImageButton imageButton;
-    private ImageView speechTextCheickStatus;
+
+    private ImageView speechBtnPrompt;
+    private ImageView repeatButton;
+    private ImageView nextButton;
 
     private TextSpeaker textSpeaker;
-    private static boolean isOk = false;
     private static int repeatCount = 0;
 
     private TTSpeechAsyncTask textSpeechTask;
@@ -55,12 +53,14 @@ public class TextToSpeechActivity extends Activity {
         textSpeaker = (TextSpeaker) getIntent().getSerializableExtra("speaker");
 
         speechBtnPrompt = findViewById(R.id.speech_prompt_btn);
-        speechBtnPrompt.setOnClickListener(onClickListener);
+        speechBtnPrompt.setOnClickListener(onSpeechPromptBtnClickListener);
+        speechBtnPrompt.setVisibility(View.INVISIBLE);
 
-        speechTextCheickStatus = findViewById(R.id.speech_text_cheick_status);
+        repeatButton = findViewById(R.id.speech_text_repeat_btn);
+        repeatButton.setOnClickListener(onRepeatSpeechBtnClickListener);
 
-        imageButton = findViewById(R.id.btn_next);
-        //imageButton.setOnClickListener(onClickListener);
+        nextButton = findViewById(R.id.btn_next);
+        nextButton.setOnClickListener(onNextBtnClickListener);
 
         //speakOutViewText();
 
@@ -106,7 +106,6 @@ public class TextToSpeechActivity extends Activity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    speechTextCheickStatus.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "good"));
                     //txtSpeechCheick.setText(result.get(0));
                 }
                 repeatCount++;
@@ -115,6 +114,7 @@ public class TextToSpeechActivity extends Activity {
             case CONTROL_CODE:
                 break;
         }
+        /*
         if (repeatCount != 2) {
             textSpeechTask = new TTSpeechAsyncTask();
             textSpeechTask.execute();
@@ -136,20 +136,36 @@ public class TextToSpeechActivity extends Activity {
 
             isOk = true;
             repeatCount = 0;
-
-
         }
+        */
 
 
     }
 
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener onSpeechPromptBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             promptSpeechInput();
         }
     };
+
+    View.OnClickListener onRepeatSpeechBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            textSpeechTask = new TTSpeechAsyncTask();
+            textSpeechTask.execute();
+        }
+    };
+
+    View.OnClickListener onNextBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            lspFragment = new ListenSpeakOutFragment();
+            setFragment(lspFragment);
+        }
+    };
+
 
     void setFragment(Fragment fragment) {
 
@@ -164,7 +180,7 @@ public class TextToSpeechActivity extends Activity {
         String text = textView.getText().toString();
 
         try {
-            SECONDS.sleep(3);
+            SECONDS.sleep(1);
             speakOut(text);
             SECONDS.sleep(2);
         } catch (InterruptedException e) {
@@ -208,6 +224,7 @@ public class TextToSpeechActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
+            speechBtnPrompt.setVisibility(View.VISIBLE);
             promptSpeechInput();
         }
 

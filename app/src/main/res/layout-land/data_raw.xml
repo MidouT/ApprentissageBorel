@@ -10,16 +10,16 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_marginStart="@dimen/dim_horizontal_margin"
-        android:background="#48f3f7f4"
-        android:layout_weight="3">
+        android:layout_weight="2"
+        android:background="@drawable/layout_border">
 
         <TextView
             android:id="@+id/raw_word_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="40dp"
             android:text="son"/>
         <TextView
@@ -27,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:text="Graphie"
             android:layout_below="@id/raw_word_textView"/>
 
@@ -35,8 +36,26 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="@dimen/dim_horizontal_margin"
+        android:background="@drawable/layout_border">
+
+        <TextView
+            android:id="@+id/raw_refText_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:gravity="center"
         android:layout_weight="2">
 
@@ -45,21 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:scaleType="fitXY"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:gravity="center_vertical"
-        android:layout_marginEnd="@dimen/dim_horizontal_margin"
-        android:background="#f4eeee">
-
-        <TextView
-            android:id="@+id/raw_refText_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

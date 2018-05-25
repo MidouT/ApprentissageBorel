@@ -30,7 +30,9 @@
         <activity
             android:name=".activity.GestureToSpeechActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.DataConfigActivity"></activity>
+        <activity android:name=".activity.DataConfigActivity" />
+        <activity android:name=".activity.TrainSectionActivity" />
+        <activity android:name=".activity.AdminMainActivity"></activity>
     </application>
 
 </manifest>

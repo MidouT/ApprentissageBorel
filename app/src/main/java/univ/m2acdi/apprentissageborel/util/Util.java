@@ -93,4 +93,25 @@ public class Util {
 
         return context.getResources().getDrawable(image_id);
     }
+
+    public static String getFormatedGraphieStr(String graphie){
+        String str = "";
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(graphie);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        for (int i = 0; i<jsonArray.length(); i++){
+            try {
+                str+= jsonArray.getString(i)+"\t";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return str;
+    }
 }

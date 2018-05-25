@@ -137,7 +137,7 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, DataConfigActivity.class);
+            Intent intent = new Intent(this, AdminMainActivity.class);
             startActivity(intent);
             return true;
         }
@@ -152,6 +152,7 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
     }
 
 
+    // ************ REDEFINITION DES MÉTHODES DE L'INTERFACE 'AppCompatCallback' *******************
     @Override
     public void onSupportActionModeStarted(ActionMode mode) {
 
@@ -167,4 +168,5 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
     public ActionMode onWindowStartingSupportActionMode(ActionMode.Callback callback) {
         return null;
     }
+    // *********************************************************************************************
 }

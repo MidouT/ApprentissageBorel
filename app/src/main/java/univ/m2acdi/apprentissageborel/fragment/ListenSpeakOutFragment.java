@@ -26,8 +26,9 @@ public class ListenSpeakOutFragment extends Fragment {
 
     private static int index = 0;
 
-    private TextView textView;
-    private ImageView imageView;
+    private TextView tvSon;
+    private TextView tvTextRef;
+    private ImageView ivGeste;
 
     private BMObject bmObject;
     private static JSONArray jsonArray;
@@ -46,11 +47,14 @@ public class ListenSpeakOutFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_listen_speak_out, container, false);
 
-        textView = view.findViewById(R.id.word_text_view);
-        textView.setText(bmObject.getSon());
+        tvSon = view.findViewById(R.id.word_text_view);
+        tvSon.setText(bmObject.getSon());
 
-        imageView = view.findViewById(R.id.word_img_view);
-        imageView.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
+        tvTextRef = view.findViewById(R.id.text_ref_view);
+        tvTextRef.setText(bmObject.getTexte_ref());
+
+        ivGeste = view.findViewById(R.id.word_img_view);
+        ivGeste.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
 
         return view;
     }

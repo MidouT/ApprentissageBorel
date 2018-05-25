@@ -43,7 +43,7 @@ public class SectionIntroductFragment extends Fragment {
 
                 }
             }
-        }, 7000);
+        }, 4000);
 
         setSectionTitle();
 
