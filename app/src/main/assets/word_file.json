@@ -3,66 +3,78 @@
     "son": "a",
     "graphie": ["a", "magna", "amet"],
     "texte_ref": "Ouvre la main, ouvre la bouche et dis a. C’est le a de rat",
-    "geste": "bm_a"
+    "geste": "bm_a",
+    "anim" : "anim_a"
   },
   {
     "son": "e",
     "graphie": ["e", "et", "er", "eu"],
     "texte_ref": "Fais un creux avec ta main et dis e. C'est le e de renard, le eu de fleur, et le oeu de coeur",
-    "geste": "bm_e"
+    "geste": "bm_e",
+    "anim" : "anim_e"
   },
   {
     "son": "o",
     "graphie": ["o", "au", "eau", "ot"],
     "texte_ref": "Fais un rond avec tes doigts et dis o. C’est le o d’orange, le au de chaussures et le eau de bat eau.",
-    "geste": "bm_o"
+    "geste": "bm_o",
+    "anim" : "anim_o"
   },
   {
     "son": "i",
     "graphie": ["i", "y"],
     "texte_ref": "i a un doit en l'air. C'est le i de lit et le y de pyjama",
-    "geste": "bm_i"
+    "geste": "bm_i",
+    "anim" : "anim_i"
   },
   {
     "son": "u",
     "graphie": ["u", "us", "ut"],
     "texte_ref": "u a deux doigts en l'air. C'est le u de lune",
-    "geste": "bm_u"
+    "geste": "bm_u",
+    "anim" : "anim_u"
   },
   {
     "son": "an",
     "graphie": ["an", "en", "em", "am", "ans"],
     "texte_ref": "Loin de ton nez, c'est a. Près du nez, c'est an. C'est le an de maman et le en de vent",
-    "geste": "bm_an"
+    "geste": "bm_an",
+    "anim" : "anim_an"
+
   },
   {
     "son": "ou",
     "graphie": ["ou", "ous", "out"],
     "texte_ref": "Trois doigts font le o, deux doigts font le u et tu di ou en avançant. C'est le ou de loup",
-    "geste": "bm_ou"
+    "geste": "bm_ou",
+    "anim" : "anim_ou"
   },
   {
     "son": "é",
     "graphie": ["é", "er", "ez"],
     "texte_ref": "Mets ton accent en avant, comme é. C'est le é d'épé, le er de rocher et le ez de nez",
-    "geste": "bm_ee"
+    "geste": "bm_ee",
+    "anim" : "anim_ee"
   },
   {
     "son": "è",
     "graphie": ["è", "ei", "est","ai", "ê"],
     "texte_ref": "Mets ton accent en arrière comme le è. C'est le è de flèche et le ê de forêt, le ai de balai, le ei de reine",
-    "geste": "bm_eee"
+    "geste": "bm_eee",
+    "anim" : "anim_eee"
   },
   {
     "son": "r",
     "graphie": ["r"],
     "texte_ref": "C'est là, dans ta gorge, qu'il gratte un peu. C'est le r de robot",
-    "geste": "bm_r"
+    "geste": "bm_r",
+    "anim" : "anim_r"
   },
   {
     "son": "f",
     "graphie": ["f", "ph"],
     "texte_ref": "Suis la flèche et fais comme si tu frottais : il faut le dire longtemps. C'est f de de fée et le ph de photographie.",
-    "geste": "bm_f"
+    "geste": "bm_f",
+    "anim" : "anim_f"
   }
 ]

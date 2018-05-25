@@ -8,12 +8,14 @@ public class BMObject implements Serializable {
     private String graphie;
     private String texte_ref;
     private String geste;
+    private String anim;
 
-    public BMObject(String son, String graphie, String texte_ref, String geste) {
+    public BMObject(String son, String graphie, String texte_ref, String geste, String anim) {
         this.son = son;
         this.graphie = graphie;
         this.texte_ref = texte_ref;
         this.geste = geste;
+        this.anim = anim;
     }
 
     public BMObject() {
@@ -49,5 +51,11 @@ public class BMObject implements Serializable {
 
     public void setGeste(String geste) {
         this.geste = geste;
+    }
+
+    public String getAnim() {return anim;}
+
+    public void setAnim(String anim) {
+        this.anim = anim;
     }
 }

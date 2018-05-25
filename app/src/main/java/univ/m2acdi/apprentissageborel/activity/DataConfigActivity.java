@@ -59,6 +59,7 @@ public class DataConfigActivity extends Activity {
                 bmObject.setGraphie(jsonObject.getString("graphie"));
                 bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
                 bmObject.setGeste(jsonObject.getString("geste"));
+                bmObject.setAnim("anim");
                 System.out.println("Son "+i+": "+jsonObject.getString("son"));
             } catch (JSONException e) {
                 e.printStackTrace();

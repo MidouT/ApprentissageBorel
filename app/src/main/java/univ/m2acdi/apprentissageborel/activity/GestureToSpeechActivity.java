@@ -16,6 +16,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
+import pl.droidsonroids.gif.GifImageView;
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.Util;
@@ -24,9 +25,11 @@ import static android.content.ContentValues.TAG;
 
 public class GestureToSpeechActivity extends Activity {
 
-    private TextView textView ;
+    //private TextView textView ;
     private ImageView imageView ;
     private ImageButton imageButton;
+    private GifImageView gifImageView;
+    private TextView textUser;
 
     private static int index = 0;
     private static Boolean flag = false;
@@ -45,10 +48,13 @@ public class GestureToSpeechActivity extends Activity {
         jsonArray = Util.getJsonArrayDataFromIntent(getIntent(), "jsonArray");
 
         bmObject = Util.readNextWord(jsonArray, index);
-        textView = findViewById(R.id.word_text_view);
+        //textView = findViewById(R.id.word_text_view);
+        gifImageView = findViewById(R.id.gifImageView);
         imageView = findViewById(R.id.word_img_view);
+        textUser = findViewById(R.id.text_user);
         imageView.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getGeste()));
         imageButton = findViewById(R.id.btn_next);
+
 
         initVoiceRecognizer();
     }
@@ -74,7 +80,10 @@ public class GestureToSpeechActivity extends Activity {
             }else{
                 ++index;
             }
-            textView.setText("");
+            //textView.setText("");
+            gifImageView.setImageResource(R.drawable.point);
+            textUser.setText("");
+            //textView.setCompoundDrawablesWithIntrinsicBounds( R.drawable.point, 0, 0, 0);
             bmObject = Util.readNextWord(jsonArray, index);
             imageView.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getGeste()));
             flag = false;
@@ -131,14 +140,20 @@ public class GestureToSpeechActivity extends Activity {
         public void onResults(Bundle results) {
             System.out.println("============= Reconnaissance ============");
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            for(int i = 0; i < data.size(); i++){
-                if((data.get(i).equalsIgnoreCase(bmObject.getSon()) || (data.get(i).equals(bmObject.getSon().toUpperCase())))){
+            for (int i = 0; i < data.size(); i++){
+                if(data.get(i).toLowerCase().contains(bmObject.getSon())){
+                    System.out.println("Vous avez prononcé une phrase contenant " + bmObject.getSon() + " : " + data.get(i));
+                    textUser.setText(data.get(i));
                     flag = true;
                     imageButton.setEnabled(flag);
-                    textView.setText(bmObject.getSon());
+                    gifImageView.setImageResource(Util.getRessourceId(getApplicationContext(),bmObject.getAnim()));
+                    //textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    //textView.setCompoundDrawablesWithIntrinsicBounds( R.drawable.a, 0, 0, 0);
+                    //textView.setText(bmObject.getSon());
                     break;
                 }
             }
+
 
             for(int i = 0; i < data.size(); i++){
                 System.out.println(data.get(i));
