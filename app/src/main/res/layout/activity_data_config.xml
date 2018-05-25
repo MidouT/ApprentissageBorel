@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:divider="#d46321"
         android:dividerHeight="3dp"
-        android:background="@drawable/listview_border"
         android:layout_below="@id/data_config_view_title">
 
     </ListView>
