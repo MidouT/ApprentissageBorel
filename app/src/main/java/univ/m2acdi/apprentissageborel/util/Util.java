@@ -29,6 +29,7 @@ public class Util {
             bmObject.setGraphie(jsonObject.getString("graphie"));
             bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
             bmObject.setGeste(jsonObject.getString("geste"));
+            bmObject.setAnim(jsonObject.getString("anim"));
         } catch (JSONException e) {
 
         }
@@ -95,6 +96,17 @@ public class Util {
         int image_id = context.getResources().getIdentifier(geste, "drawable", context.getPackageName());
 
         return context.getResources().getDrawable(image_id);
+    }
+
+    /**
+     * Récupère un id de ressource (int)
+     *
+     * @param anim
+     * @return
+     */
+    public static int getRessourceId(Context context, String anim) {
+
+        return context.getResources().getIdentifier(anim, "drawable", context.getPackageName());
     }
 
     public static String getFormatedGraphieStr(String graphie) {
