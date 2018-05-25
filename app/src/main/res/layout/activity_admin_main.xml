@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AdminMainActivity">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="10dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp">
+
+            <Button
+                android:id="@+id/app_data_config_btnId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Données de l'application"
+                android:textStyle="italic"
+                android:textAllCaps="false"
+                android:textSize="40dp"
+                android:textColor="#FF7F00"
+                android:drawableLeft="@drawable/settings_144"
+                android:drawablePadding="20dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/app_train_section_btnId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Paramètrage des exercices"
+                android:textStyle="italic"
+                android:textAllCaps="false"
+                android:textSize="40dp"
+                android:textColor="#2D3E4E"
+                android:drawableLeft="@drawable/school_test_144"
+                android:drawablePadding="20dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <ImageButton
+                android:id="@+id/app_train_more_btnId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_more_144"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

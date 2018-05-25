@@ -15,11 +15,12 @@ public class Util {
 
     /**
      * Renvoie l'objet se trouvant dans la position indexé dans le tableau
+     *
      * @param jsonArray
      * @param index
      * @return
      */
-    public static BMObject readNextWord(JSONArray jsonArray, int index){
+    public static BMObject readNextWord(JSONArray jsonArray, int index) {
 
         BMObject bmObject = new BMObject();
         try {
@@ -37,11 +38,12 @@ public class Util {
 
     /**
      * Méthode de récupération des données passées à une activité via l'intent
+     *
      * @param intent
      * @param attrName
      * @return
      */
-    public static JSONArray getJsonArrayDataFromIntent(Intent intent, String attrName){
+    public static JSONArray getJsonArrayDataFromIntent(Intent intent, String attrName) {
 
         String stringArray = intent.getStringExtra(attrName);
         JSONArray jsArray = null;
@@ -56,12 +58,13 @@ public class Util {
 
     /**
      * Méthode de lecture du fichier de données
-     *
+     * <p>
      * Initialise la liste de données (tableau JSON)
+     *
      * @param context
      * @return
      */
-    public static JSONArray readJsonDataFile(Context context, String filename){
+    public static JSONArray readJsonDataFile(Context context, String filename) {
         JSONArray jsonArray = null;
         String jsonStr;
         try {
@@ -75,7 +78,7 @@ public class Util {
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonArray;
@@ -94,21 +97,42 @@ public class Util {
         return context.getResources().getDrawable(image_id);
     }
 
+    public static String getFormatedGraphieStr(String graphie) {
+        String str = "";
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(graphie);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                str += jsonArray.getString(i) + "\t";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return str;
+    }
+
     /**
-    * Recupere le bm object d'un son passer en parametre
-    *
+     * Recupere le bm object d'un son passer en parametre
+     *
      * @param jsonArray
      * @param son
      * @return
-    * */
-    public static BMObject getWordObject(JSONArray jsonArray, String son){
-        BMObject bm=null;
-        for(int i=0; i<jsonArray.length();i++) {
-            bm=Util.readNextWord(jsonArray, i);
-            if(bm.getSon().toString().equals(son.toString()))
+     */
+    public static BMObject getWordObject(JSONArray jsonArray, String son) {
+        BMObject bm = null;
+        for (int i = 0; i < jsonArray.length(); i++) {
+            bm = Util.readNextWord(jsonArray, i);
+            if (bm.getSon().toString().equals(son.toString()))
                 return bm;
         }
-        bm=null;
+        bm = null;
         return bm;
     }
 }
