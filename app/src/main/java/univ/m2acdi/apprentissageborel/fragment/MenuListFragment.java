@@ -20,6 +20,7 @@ public class MenuListFragment extends Fragment {
     private ImageButton listen_btn;
     private ImageButton what_about_btn;
     private ImageButton gesture_order_btn;
+
     private BtnClickListener myListener;
 
     public MenuListFragment() {

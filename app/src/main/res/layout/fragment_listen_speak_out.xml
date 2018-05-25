@@ -6,46 +6,77 @@
     android:orientation="horizontal"
     tools:context=".fragment.ListenSpeakOutFragment">
 
+    <View
+        android:layout_width="3dp"
+        android:layout_height="wrap_content"
+        android:background="#ed4f1f" />
+
+
+    <LinearLayout
+        android:id="@+id/word_img_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/word_img_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/bm_a" />
+
+    </LinearLayout>
+
+
+
     <RelativeLayout
         android:id="@+id/word_text_layout"
-        android:layout_height="match_parent"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="2">
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/word_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/dim_text_size_big"
-            android:text="texte"/>
+            android:text="texte"
+            android:textColor="#FF4A1C"
+            android:textSize="160dp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
-    <View android:background="#d4cfcf"
-        android:layout_width="2dp"
-        android:layout_height="wrap_content"
-        />
-
-    <LinearLayout
-        android:id="@+id/word_img_layout"
+    <RelativeLayout
+        android:id="@+id/text_ref_layout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="3"
         android:orientation="vertical"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="3" >
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-        <ImageView
-            android:id="@+id/word_img_view"
+        <TextView
+            android:id="@+id/text_ref_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            />
+            android:layout_centerInParent="true"
+            android:text="Ref text"
+            android:lineSpacingMultiplier="1.5"
+            android:lineSpacingExtra="6dp"
+            android:textSize="@dimen/dim_text_size_normal" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="wrap_content"
+        android:background="#ed4f1f" />
 
 </LinearLayout>
