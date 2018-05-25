@@ -11,10 +11,25 @@
         android:id="@+id/adminFragmentContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true">
+=======
+        android:gravity="center"
+        android:text="App data config view title"
+        android:textColor="#5577FF"
+        android:textSize="30dp"/>
+
+    <ListView
+        android:id="@+id/data_config_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#d46321"
+        android:dividerHeight="3dp"
+        android:layout_below="@id/data_config_view_title">
+>>>>>>> upstream/master
 
     </FrameLayout>
 

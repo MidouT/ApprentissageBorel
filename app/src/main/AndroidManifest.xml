@@ -30,9 +30,12 @@
         <activity
             android:name=".activity.GestureToSpeechActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.DataConfigActivity" />
-        <activity android:name=".activity.TrainSectionActivity" />
-        <activity android:name=".activity.AdminMainActivity"></activity>
+        <activity android:name=".activity.TrainSectionActivity" android:screenOrientation="landscape" />
+        <activity android:name=".activity.AdminMainActivity" android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.OrderGestActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.DataConfigActivity"></activity>
     </application>
 
 </manifest>
