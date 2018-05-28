@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/dim_horizontal_margin"
     android:layout_marginRight="@dimen/dim_horizontal_margin"
-    android:background="@drawable/background"
+    android:background="@drawable/bckgrnd"
     tools:context=".activity.MainActivity" >
 
     <android.support.v7.widget.Toolbar

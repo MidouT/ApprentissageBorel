@@ -9,29 +9,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.DataListFragment;
 import univ.m2acdi.apprentissageborel.fragment.NewBMObjectFragment;
 import univ.m2acdi.apprentissageborel.listener.AdminConfigListener;
 import univ.m2acdi.apprentissageborel.util.BMObject;
-import univ.m2acdi.apprentissageborel.util.Util;
 
 public class DataConfigActivity extends Activity implements AdminConfigListener{
 
     private static final int READ_REQUEST_CODE = 42;
+
+    private static final String DATA_LIST_FRAG_TAG = "DATALIST_FRAG_TAG";
+    private static final String NEW_OBJECT_FRAG_TAG ="NEWOBJECT_FRAG_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_config);
 
-        setFragment(new DataListFragment());
+        setFragment(new DataListFragment(), DATA_LIST_FRAG_TAG);
     }
 
 
@@ -39,51 +35,23 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
      * Permet de gérer les transitions de fragment
      * @param fragment
      */
-    public void setFragment(Fragment fragment){
+    public void setFragment(Fragment fragment, String tag){
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.adminFragmentContainer, fragment, null);
+        ft.replace(R.id.adminFragmentContainer, fragment, tag);
         ft.commit();
     }
-
 
     /**
      * Fires an intent to spin up the "file chooser" UI and select an image.
      */
-
-    private ArrayList<BMObject> getAllData() {
-        ArrayList<BMObject> objectArrayList = new ArrayList<>();
-        JSONArray jsonArray = Util.readJsonDataFile(this, "word_file.json");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            BMObject bmObject = new BMObject();
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                bmObject.setSon(jsonObject.getString("son"));
-                bmObject.setGraphie(jsonObject.getString("graphie"));
-                bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
-                bmObject.setGeste(jsonObject.getString("geste"));
-                bmObject.setAnim("anim");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return objectArrayList;
-    }
     public void performFileSearch() {
 
-        // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-        // browser.
+        // ACTION_OPEN_DOCUMENT: intent ouvrant l'explorateur de fichier
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 
-        // Filter to only show results that can be "opened", such as a
-        // file (as opposed to a list of contacts or timezones)
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-        // Filter to show only images, using the image MIME data type.
-        // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-        // To search for all documents available via installed storage providers,
-        // it would be "*/*".
         intent.setType("image/*");
 
         startActivityForResult(intent, READ_REQUEST_CODE);
@@ -114,12 +82,13 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
     @Override
     public void onAddNewBtnClicked(View view) {
         //Ajout du fragment pour la création d'un objet
-        setFragment(new NewBMObjectFragment());
+        setFragment(new NewBMObjectFragment(), NEW_OBJECT_FRAG_TAG);
     }
 
     @Override
-    public void onNewBMObjectCreateBtnClicked() {
-
+    public void onNewBMObjectCreateBtnClicked(BMObject bmObject) {
+        DataListFragment dataListFragment = (DataListFragment) getFragmentManager().findFragmentByTag(DATA_LIST_FRAG_TAG);
+        dataListFragment.addNewBMObject(bmObject);
     }
 
     @Override
