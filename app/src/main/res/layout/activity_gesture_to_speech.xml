@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_weight="5"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".activity.GestureToSpeechActivity">
@@ -12,8 +11,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/btn_prec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/left_next_144"/>
+            </RelativeLayout>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/word_img_layout"
             android:layout_width="0dp"
@@ -67,64 +76,26 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:src="@drawable/micro"
-                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
                     android:onClick="startListening"
                     android:background="@android:color/white"
                     />
-
-                <ImageButton
-                    android:id="@+id/btn_next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/button_forward"/>
-
-                <!--<pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/gifImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/point"
-                    android:onClick="startListening"
-                    />-->
-            </RelativeLayout>
-
+           </RelativeLayout>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentCenter="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/rigth_next_144"/>
+            </RelativeLayout>
         </LinearLayout>
-
-        <!--<View android:background="#d4cfcf"
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"
-            />-->
-
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="3">
-
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/micro"
-            android:onClick="startListening"
-            android:background="@android:color/white"
-            />
-
-        <ImageButton
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/button_forward"/>
-
-    </RelativeLayout>-->
-
 </LinearLayout>
