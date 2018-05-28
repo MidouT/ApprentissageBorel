@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.activity.DataConfigActivity;
 import univ.m2acdi.apprentissageborel.listener.AdminConfigListener;
+import univ.m2acdi.apprentissageborel.util.BMObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,7 @@ public class NewBMObjectFragment extends Fragment {
     private EditText edTxtTextRef;
     private ImageView imgViewGeste;
     private ImageButton fileUploadBtn;
+    private Button submitButton;
 
     private LinearLayout addGraphieLayout;
 
@@ -49,6 +53,9 @@ public class NewBMObjectFragment extends Fragment {
         fileUploadBtn = view.findViewById(R.id.add_file_upload_btn);
         fileUploadBtn.setOnClickListener(onFileUplodBtnClckListener);
 
+        submitButton = view.findViewById(R.id.submit_new_object);
+        submitButton.setOnClickListener(onSubmitBtnClckListener);
+
         addGraphieLayout = view.findViewById(R.id.add_graphie_layout);
 
         return view;
@@ -68,6 +75,19 @@ public class NewBMObjectFragment extends Fragment {
         @Override
         public void onClick(View view) {
             adminConfigListener.onFileUploadBtnClicked();
+        }
+    };
+
+    View.OnClickListener onSubmitBtnClckListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String son = edTxtSon.getText().toString();
+            String graphie = edTxtGraphie.getText().toString();
+            String textRef = edTxtTextRef.getText().toString();
+
+            BMObject bmObject = new BMObject(son,graphie, textRef, "bm_a", "anim_a");
+
+            ((DataConfigActivity)getActivity()).onNewBMObjectCreateBtnClicked(bmObject);
         }
     };
 

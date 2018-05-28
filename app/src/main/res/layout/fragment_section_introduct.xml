@@ -3,32 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:gravity="center"
+    android:background="@drawable/bckgrnd"
     tools:context=".fragment.SectionIntroductFragment">
 
     <TextView
         android:id="@+id/section_introduct_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:textSize="@dimen/dim_text_size_big"
-        android:textColor="#5792f9"
+        android:textColor="#e74513"
+        android:textAllCaps="false"
+        android:textStyle="bold"
         android:text="Écoute - Répétition" />
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/chargement"
+        android:layout_below="@id/section_introduct_title"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/charging"
         />
-
-    <!--<ImageButton
-        android:id="@+id/section_activity_start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/chargement"/>-->
 
 </RelativeLayout>

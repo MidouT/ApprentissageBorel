@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import univ.m2acdi.apprentissageborel.R;
 
@@ -17,9 +18,9 @@ import univ.m2acdi.apprentissageborel.R;
  */
 public class MenuListFragment extends Fragment {
 
-    private ImageButton listen_btn;
-    private ImageButton what_about_btn;
-    private ImageButton gesture_order_btn;
+    private ImageView listen_btn;
+    private ImageView what_about_btn;
+    private ImageView gesture_order_btn;
 
     private BtnClickListener myListener;
 

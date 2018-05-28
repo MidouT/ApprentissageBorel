@@ -98,6 +98,7 @@ public class DataListFragment extends Fragment {
                 bmObject.setGraphie(jsonObject.getString("graphie"));
                 bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
                 bmObject.setGeste(jsonObject.getString("geste"));
+                bmObject.setAnim(jsonObject.getString("anim"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -105,7 +106,10 @@ public class DataListFragment extends Fragment {
         }
 
         return objectArrayList;
+    }
 
+    public void addNewBMObject(BMObject bmObject){
+        bmObjectAdapter.add(bmObject);
     }
 
 }

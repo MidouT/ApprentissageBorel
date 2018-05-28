@@ -11,17 +11,9 @@
 
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,11 +21,6 @@
             android:layout_weight="1">
 
         </LinearLayout>
-
-        <View android:background="#ed4f1f"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            />
 
         <FrameLayout
             android:id="@+id/lspFragmentContainer"
@@ -44,44 +31,62 @@
 
         </FrameLayout>
 
-        <View android:background="#ed4f1f"
-            android:layout_width="wrap_content"
-            android:layout_height="3dp"
-            />
-
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_weight="2">
 
-            <ImageView
-                android:id="@+id/speech_text_repeat_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:layout_marginLeft="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icon_repeat_144"/>
+                android:layout_marginRight="25dp"
+                android:layout_weight="5">
 
-            <ImageView
-                android:id="@+id/speech_prompt_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/icon_micro_96"/>
+                <ImageView
+                    android:id="@+id/speech_text_repeat_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icon_repeat_144"/>
 
-            <ImageView
-                android:id="@+id/btn_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/rigth_next_144"/>
+                <ImageView
+                    android:id="@+id/speech_prompt_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_micro_96"/>
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/step_success_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_success_96"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -89,13 +94,6 @@
             android:layout_weight="1">
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
 
     </LinearLayout>
 
