@@ -8,7 +8,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import java.util.Locale;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.ListenSpeakOutFragment;
+import univ.m2acdi.apprentissageborel.util.SpeechRecognizeManager;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 import univ.m2acdi.apprentissageborel.util.Util;
 
@@ -27,17 +30,17 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class TextToSpeechActivity extends Activity {
 
-    private final int REQ_CODE_SPEECH_INPUT = 100;
     private final int SHORT_DURATION = 1000;
 
     private ImageView speechBtnPrompt;
     private ImageView repeatButton;
-    private ImageView nextButton;
+    private ImageView stepSuccessButton;
 
     private TextSpeaker textSpeaker;
     private static int repeatCount = 0;
 
     private TTSpeechAsyncTask textSpeechTask;
+    private SpeechRecognizeManager speechRecognizeManager;
 
     private ListenSpeakOutFragment lspFragment;
 
@@ -51,16 +54,20 @@ public class TextToSpeechActivity extends Activity {
         setFragment(lspFragment);
 
         textSpeaker = (TextSpeaker) getIntent().getSerializableExtra("speaker");
+        textSpeaker.setPitchRate(0.7f);
 
         speechBtnPrompt = findViewById(R.id.speech_prompt_btn);
         speechBtnPrompt.setOnClickListener(onSpeechPromptBtnClickListener);
         speechBtnPrompt.setVisibility(View.INVISIBLE);
 
+        stepSuccessButton = findViewById(R.id.step_success_btn);
+        stepSuccessButton.setVisibility(View.INVISIBLE);
+
         repeatButton = findViewById(R.id.speech_text_repeat_btn);
         repeatButton.setOnClickListener(onRepeatSpeechBtnClickListener);
 
-        nextButton = findViewById(R.id.btn_next);
-        nextButton.setOnClickListener(onNextBtnClickListener);
+        speechRecognizeManager = new SpeechRecognizeManager(this);
+        speechRecognizeManager.initVoiceRecognizer(recognitionListener);
 
         //speakOutViewText();
 
@@ -69,104 +76,33 @@ public class TextToSpeechActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        textSpeechTask = new TTSpeechAsyncTask();
-        textSpeechTask.execute();
+        //textSpeechTask = new TTSpeechAsyncTask();
+        //textSpeechTask.execute();
     }
 
-    /**
-     * Speech input dialog
-     */
-    private void promptSpeechInput() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        //intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Lis la lettre ou le mot");
-        try {
-            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-        } catch (ActivityNotFoundException a) {
-            Toast.makeText(getApplicationContext(), "Non supporté", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Réception du texte entendu
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        final int CONTROL_CODE = 99;
-
-        ArrayList<String> result = null;
-        switch (requestCode) {
-            case REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK && null != data) {
-                    result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    //txtSpeechCheick.setText(result.get(0));
-                }
-                repeatCount++;
-                break;
-            }
-            case CONTROL_CODE:
-                break;
-        }
-        /*
-        if (repeatCount != 2) {
-            textSpeechTask = new TTSpeechAsyncTask();
-            textSpeechTask.execute();
-        } else {
-
-            try {
-                SECONDS.sleep(3);
-                lspFragment = new ListenSpeakOutFragment();
-                setFragment(lspFragment);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Intent intent = new Intent();
-            try {
-                startActivityForResult(intent, CONTROL_CODE);
-            } catch (ActivityNotFoundException aex) {
-                aex.printStackTrace();
-            }
-
-            isOk = true;
-            repeatCount = 0;
-        }
-        */
-
-
-    }
-
+    // ************************* LISTENERS DE BUTTONS *********************************
 
     View.OnClickListener onSpeechPromptBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            promptSpeechInput();
+            speechRecognizeManager.startListeningSpeech();
         }
     };
 
     View.OnClickListener onRepeatSpeechBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            stepSuccessButton.setVisibility(View.INVISIBLE);
             textSpeechTask = new TTSpeechAsyncTask();
             textSpeechTask.execute();
         }
     };
 
-    View.OnClickListener onNextBtnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            lspFragment = new ListenSpeakOutFragment();
-            setFragment(lspFragment);
-        }
-    };
 
-
+    /**
+     * Gère les transitions de fragment
+     * @param fragment
+     */
     void setFragment(Fragment fragment) {
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -190,6 +126,10 @@ public class TextToSpeechActivity extends Activity {
     }
 
 
+    /**
+     * Prononce le text passé en paramètre
+     * @param text
+     */
     protected void speakOut(String text) {
         if (!textSpeaker.isSpeaking()) {
             textSpeaker.speakText(text);
@@ -197,6 +137,69 @@ public class TextToSpeechActivity extends Activity {
         }
 
     }
+
+    /**
+     * Met à jour la visibilité (dépuis le fragment)
+     */
+    public void setStepSuccessButtonVisibility(){
+        stepSuccessButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void createNewSpeechTask(){
+        textSpeechTask = new TTSpeechAsyncTask();
+        textSpeechTask.execute();
+    }
+
+    protected RecognitionListener recognitionListener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+
+        }
+
+        @Override
+        public void onRmsChanged(float rmsdB) {
+
+        }
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {
+
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+
+        }
+
+        @Override
+        public void onError(int error) {
+
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+            speechBtnPrompt.setVisibility(View.INVISIBLE);
+            stepSuccessButton.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        public void onPartialResults(Bundle partialResults) {
+
+        }
+
+        @Override
+        public void onEvent(int eventType, Bundle params) {
+
+        }
+    };
 
     /**
      * Classe de gestion asynchrone de la synthèse vocale
@@ -225,7 +228,8 @@ public class TextToSpeechActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             speechBtnPrompt.setVisibility(View.VISIBLE);
-            promptSpeechInput();
+            speechRecognizeManager.startListeningSpeech();
+
         }
 
     }

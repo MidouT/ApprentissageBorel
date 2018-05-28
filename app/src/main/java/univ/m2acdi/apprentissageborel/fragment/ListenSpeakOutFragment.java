@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.activity.TextToSpeechActivity;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.Util;
 
@@ -29,6 +30,9 @@ public class ListenSpeakOutFragment extends Fragment {
     private TextView tvSon;
     private TextView tvTextRef;
     private ImageView ivGeste;
+
+    private ImageView nextButtonRight;
+    private ImageView nextButtonLeft;
 
     private BMObject bmObject;
     private static JSONArray jsonArray;
@@ -48,13 +52,17 @@ public class ListenSpeakOutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_listen_speak_out, container, false);
 
         tvSon = view.findViewById(R.id.word_text_view);
-        tvSon.setText(bmObject.getSon());
-
         tvTextRef = view.findViewById(R.id.text_ref_view);
-        tvTextRef.setText(bmObject.getTexte_ref());
-
         ivGeste = view.findViewById(R.id.word_img_view);
-        ivGeste.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
+
+
+        nextButtonRight = view.findViewById(R.id.btn_next_right);
+        nextButtonRight.setOnClickListener(onNextBtnClickListener);
+
+        nextButtonLeft = view.findViewById(R.id.btn_next_left);
+        nextButtonLeft.setOnClickListener(onNextBtnClickListener);
+
+        ((TextToSpeechActivity)getActivity()).createNewSpeechTask();
 
         return view;
     }
@@ -66,7 +74,6 @@ public class ListenSpeakOutFragment extends Fragment {
 
         activityIntent = getActivity().getIntent();
         jsonArray = Util.getJsonArrayDataFromIntent(activityIntent, "jsonArray");
-        readNextWord();
     }
 
 
@@ -83,12 +90,49 @@ public class ListenSpeakOutFragment extends Fragment {
 
     }
 
+    View.OnClickListener onNextBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+
+            switch (id){
+                case R.id.btn_next_right:
+                    if(index == jsonArray.length()-1){
+                        index = 0;
+                    }else {
+                        index++;
+                    }
+                    break;
+
+                case R.id.btn_next_left:
+                    if(index == 0){
+                        index = jsonArray.length() -1;
+                    }else {
+                        index--;
+                    }
+                    break;
+
+                    default:
+                        break;
+            }
+
+            readNextWord();
+            ((TextToSpeechActivity)getActivity()).setStepSuccessButtonVisibility();
+            ((TextToSpeechActivity)getActivity()).createNewSpeechTask();
+        }
+    };
+
+    /**
+     * Lis l'objet situé en position index
+     */
     public void readNextWord() {
 
         bmObject = Util.readNextWord(jsonArray, index);
-        index++;
-        if (index == jsonArray.length()) {
-            index = 0;
-        }
+
+        tvSon.setText(bmObject.getSon());
+        tvTextRef.setText(bmObject.getTexte_ref());
+        ivGeste.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
+
     }
+
 }

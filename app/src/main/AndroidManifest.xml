@@ -30,8 +30,12 @@
         <activity
             android:name=".activity.GestureToSpeechActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.TrainSectionActivity" android:screenOrientation="landscape" />
-        <activity android:name=".activity.AdminMainActivity" android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.TrainSectionActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.AdminMainActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.OrderGestActivity"
             android:screenOrientation="landscape" />
