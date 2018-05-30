@@ -1,11 +1,14 @@
 package univ.m2acdi.apprentissageborel.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.view.View;
+import android.widget.ImageView;
+
+import java.util.zip.CheckedOutputStream;
 
 public class SpeechRecognizeManager {
 
@@ -29,6 +32,7 @@ public class SpeechRecognizeManager {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "fr-FR");
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, activity.getPackageName());
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);
+
     }
 
     public void startListeningSpeech() {
@@ -37,6 +41,8 @@ public class SpeechRecognizeManager {
         }
         speechRecognizer.startListening(speechRecognizerIntent);
     }
+
+
 
     private SpeechRecognizer getSpeechRecognizer(RecognitionListener recognitionListener){
         if (speechRecognizer == null) {
