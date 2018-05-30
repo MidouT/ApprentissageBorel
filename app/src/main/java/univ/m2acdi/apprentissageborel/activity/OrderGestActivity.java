@@ -18,6 +18,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
@@ -37,6 +40,7 @@ public class OrderGestActivity extends AppCompatActivity {
     private RelativeLayout find_layout;
    // private RelativeLayout.LayoutParams layoutParams;
     private BMObject bm;
+    private List<ImageView> wordimages;
     private int it;
     private int wordFind;
     private ExerciseWord exo;
@@ -55,6 +59,7 @@ public class OrderGestActivity extends AppCompatActivity {
         it=0;
         wordFind=0;
         exo=null;
+        wordimages=new ArrayList<>();
         flag = false;
         read_text = findViewById(R.id.dispay_word);
         mylayout = (RelativeLayout) findViewById(R.id.image_layout);
@@ -68,6 +73,7 @@ public class OrderGestActivity extends AppCompatActivity {
         super.onStart();
        // imageButton.setEnabled(flag);
         imageButton.setOnClickListener(onClickListener);
+        showWordAndimage();
 
     }
 
@@ -133,6 +139,7 @@ public class OrderGestActivity extends AppCompatActivity {
         //initialisation de l'ecran: on enleve toutes les anciennes images
         mylayout.removeAllViewsInLayout();
         find_layout.removeAllViewsInLayout();
+        wordimages=new ArrayList<>();
         it=1;
 
         BMObject bm;
@@ -162,35 +169,49 @@ public class OrderGestActivity extends AppCompatActivity {
             bm = Util.getWordObject(jsonData, x);
             if(bm!=null)
             {
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        width,
-                        height
-                );
-                if(it==1) {
-                    // layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                }
-                else{
-                   /* int a=it%2;
 
-                       if(a==0) {
-                                    layoutParams.addRule(RelativeLayout.LEFT_OF, (it - 2)); }
-                        else
-                            if(a==1) {*/
-                                         layoutParams.addRule(RelativeLayout.LEFT_OF, (it-1));
-                                   //  }
-                }
                 image=new ImageView(mylayout.getContext());
                 image.setId(it);
                 image.setImageDrawable(Util.getImageViewByName(getApplicationContext(),bm.getGeste().toString()));
                 image.setOnClickListener(myWordChecker);
-                mylayout.addView(image,layoutParams);
-
+                wordimages.add(image);
                 it++;
             }
             wordFind=1;
             //imageButton.setEnabled(flag);
         }
+
+        mixImage(it-1);
+        int firstput=0;
+        for(ImageView x: wordimages) {
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    width,
+                    height
+            );
+            if(firstput==0) {
+
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            }
+            else{
+
+                layoutParams.addRule(RelativeLayout.LEFT_OF, (firstput));
+            }
+            mylayout.addView(x, layoutParams);
+            firstput=x.getId();
+        }
+    }
+
+    public void mixImage(int id){
+       ImageView pivot;
+       int rand;
+       Random rd=new Random();
+       for(int i=0; i<id; i++){
+           pivot=wordimages.get(i);
+           rand=rd.nextInt(id);
+           wordimages.set(i, wordimages.get(rand));
+           wordimages.set(rand, pivot);
+       }
+
     }
 
     public ExerciseWord readWord(int indice) {
