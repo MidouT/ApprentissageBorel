@@ -2,10 +2,12 @@ package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,12 +16,15 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import pl.droidsonroids.gif.GifImageView;
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.SpeechRecognizeManager;
 import univ.m2acdi.apprentissageborel.util.Util;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 
 public class GestureToSpeechActivity extends Activity {
@@ -28,7 +33,6 @@ public class GestureToSpeechActivity extends Activity {
     private ImageView imageView ;
     private ImageButton imageButtonNext;
     private ImageButton imageButtonPrec;
-    private GifImageView gifImageView;
     private TextView texteViewLettres;
     private ImageView wordImgIndice;
     private ImageView imageViewMicro;
@@ -113,7 +117,7 @@ public class GestureToSpeechActivity extends Activity {
 
     public void clearComponent(){
 
-        texteViewLettres.setText("");
+        texteViewLettres.setText("?");
         textUser.setText("");
         wordImgIndice.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "imageview_border"));
     }
@@ -178,13 +182,30 @@ public class GestureToSpeechActivity extends Activity {
                 if(data.get(i).toLowerCase().contains(bmObject.getMotRef().toLowerCase())){
                     wordImgIndice.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getImgMot()));
                     texteViewLettres.setText(bmObject.getSon());
-                    textUser.setText(data.get(i));
-                    Util.showCongratDialog(GestureToSpeechActivity.this);
-
+                    String result = colorChar(bmObject.getMotRef(),bmObject.getSon());
+                    textUser.setText(Html.fromHtml(result), TextView.BufferType.SPANNABLE);
+                    //Util.showCongratDialog(GestureToSpeechActivity.this);
+                    CongratDialogTask congratDialogTask = new CongratDialogTask();
+                    congratDialogTask.execute();
                     break;
                 }
             }
 
+        }
+
+        public String colorChar(String chaine, String c){
+            int i = 0;
+            String text = "";
+            while(i < chaine.length()){
+                if(chaine.charAt(i) == c.charAt(0)){
+                    text += "<font color='red'>" + chaine.substring(i,i+c.length()) + "</font>";
+                    i += c.length();
+                }else{
+                    text += String.valueOf(chaine.charAt(i));
+                    i++;
+                }
+            }
+            return text;
         }
 
         @Override
@@ -198,4 +219,35 @@ public class GestureToSpeechActivity extends Activity {
         }
     };
 
+    private class CongratDialogTask extends AsyncTask<Void, Boolean, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Toast.makeText(getApplicationContext(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Boolean... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                SECONDS.sleep(2);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Util.showCongratDialog(GestureToSpeechActivity.this);
+        }
+
+    }
 }
