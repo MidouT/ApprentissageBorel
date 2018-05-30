@@ -9,6 +9,7 @@
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="0dp"
+        android:gravity="center"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/dim_horizontal_margin"
         android:layout_weight="2"
@@ -18,16 +19,16 @@
             android:id="@+id/raw_word_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="60dp"
             android:text="son"/>
         <TextView
             android:id="@+id/raw_graphie_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:textSize="30dp"
             android:text="Graphie"
             android:layout_below="@id/raw_word_textView"/>
 

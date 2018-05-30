@@ -266,6 +266,6 @@ public class Util {
                     dialog.dismiss();
                 }
             }
-        }, 4000);
+        }, 5000);
     }
 }
