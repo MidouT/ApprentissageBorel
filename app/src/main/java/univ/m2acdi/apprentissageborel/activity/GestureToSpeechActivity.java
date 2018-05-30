@@ -1,7 +1,9 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.view.View;
@@ -177,6 +179,8 @@ public class GestureToSpeechActivity extends Activity {
                     wordImgIndice.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getImgMot()));
                     texteViewLettres.setText(bmObject.getSon());
                     textUser.setText(data.get(i));
+                    Util.showCongratDialog(GestureToSpeechActivity.this);
+
                     break;
                 }
             }
