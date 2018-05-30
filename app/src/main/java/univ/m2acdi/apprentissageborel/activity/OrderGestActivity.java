@@ -1,6 +1,5 @@
 package univ.m2acdi.apprentissageborel.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,16 +7,14 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -32,16 +29,17 @@ public class OrderGestActivity extends AppCompatActivity {
     private JSONArray jsonExo;
     private TextView read_text;
     private ImageView image;
-    private ImageButton imageButton;
+    private ImageButton nextButton;
+    private ImageButton previousButton;
     private Intent intent;
-    private int index;
+    private static int index;
     private Boolean flag;
     private RelativeLayout mylayout;
     private RelativeLayout find_layout;
    // private RelativeLayout.LayoutParams layoutParams;
     private BMObject bm;
     private List<ImageView> wordimages;
-    private int it;
+    private static int image_rank;
     private int wordFind;
     private ExerciseWord exo;
     private int width;
@@ -56,7 +54,7 @@ public class OrderGestActivity extends AppCompatActivity {
         jsonExo = Util.readJsonDataFile(this, "exercise.json");
         image=null;
         index = 0;
-        it=0;
+        image_rank =0;
         wordFind=0;
         exo=null;
         wordimages=new ArrayList<>();
@@ -65,14 +63,17 @@ public class OrderGestActivity extends AppCompatActivity {
         mylayout = (RelativeLayout) findViewById(R.id.image_layout);
         find_layout = (RelativeLayout) findViewById(R.id.find_layout);
         //layoutParams=null;
-        imageButton = findViewById(R.id.btn_next);
+        nextButton = findViewById(R.id.btn_next);
+        previousButton=findViewById(R.id.btn_prec);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
        // imageButton.setEnabled(flag);
-        imageButton.setOnClickListener(onClickListener);
+        nextButton.setOnClickListener(onClickListener);
+        previousButton.setOnClickListener(onClickListener);
         showWordAndimage();
 
     }
@@ -124,32 +125,48 @@ public class OrderGestActivity extends AppCompatActivity {
                     wordFind++;
                 }
                 if(wordFind>a.length)
-                    showWordAndimage();
+                    Util.showCongratDialog(OrderGestActivity.this);
         }
     };
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            int id=view.getId();
+            switch(id){
+                case R.id.btn_next:
+                    index++;
+                    if (index == jsonExo.length() ) {
+                        //si tout les mots des exercices sont fini, on arrete o bien on boucle?
+                        index = 0;
+                        //traitement a definir
+                    }
+                    break;
+                case R.id.btn_prec:
+                    index--;
+                    if (index < 0 ) {
+                        //si tout les mots des exercices sont fini, on arrete o bien on boucle?
+                        index = jsonExo.length()-1;
+                        //traitement a definir
+                    }
+                    break;
+                default :
+                    break;
+            }
             showWordAndimage();
 
         }
     };
+
 
     public void showWordAndimage(){
         //initialisation de l'ecran: on enleve toutes les anciennes images
         mylayout.removeAllViewsInLayout();
         find_layout.removeAllViewsInLayout();
         wordimages=new ArrayList<>();
-        it=1;
+        image_rank =1;
 
         BMObject bm;
-        if (index == jsonExo.length() - 1) {
-            //si tout les mots des exercices sont fini, on arrete o bien on boucle?
-            index = 0;
-            //traitement a definir
-        } else {
-            index++;
-        }
+
         read_text.setText("");
         exo = readWord(index);
 
@@ -165,25 +182,25 @@ public class OrderGestActivity extends AppCompatActivity {
         width=(int)mylayout.getWidth()/exo.getWord().length();
         height=(int)mylayout.getHeight()/2;
 
-        for(String x: exo.getSon()) {
-            bm = Util.getWordObject(jsonData, x);
+        for(String le_son: exo.getSon()) {
+            bm = Util.getWordObject(jsonData, le_son);
             if(bm!=null)
             {
 
                 image=new ImageView(mylayout.getContext());
-                image.setId(it);
+                image.setId(image_rank);
                 image.setImageDrawable(Util.getImageViewByName(getApplicationContext(),bm.getGeste().toString()));
                 image.setOnClickListener(myWordChecker);
                 wordimages.add(image);
-                it++;
+                image_rank++;
             }
             wordFind=1;
             //imageButton.setEnabled(flag);
         }
 
-        mixImage(it-1);
+        mixImage(image_rank -1);
         int firstput=0;
-        for(ImageView x: wordimages) {
+        for(ImageView l_image: wordimages) {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                     width,
                     height
@@ -196,11 +213,16 @@ public class OrderGestActivity extends AppCompatActivity {
 
                 layoutParams.addRule(RelativeLayout.LEFT_OF, (firstput));
             }
-            mylayout.addView(x, layoutParams);
-            firstput=x.getId();
+
+            mylayout.addView(l_image, layoutParams);
+            firstput=l_image.getId();
         }
+
+
+
     }
 
+    //desordonne les image
     public void mixImage(int id){
        ImageView pivot;
        int rand;
