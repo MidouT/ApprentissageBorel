@@ -1,16 +1,11 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
@@ -35,7 +30,7 @@ public class SectionIntroductActivity extends Activity {
         Toast.makeText(this, "Section" + section, Toast.LENGTH_SHORT).show();
 
         introductSection();
-        jsonArray = Util.readJsonDataFile(this, "word_file.json");
+        jsonArray = Util.readJsonDataFile(this, "data_file.json");
 
     }
 

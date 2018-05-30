@@ -1,13 +1,19 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.DataListFragment;
@@ -22,29 +28,85 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
     private static final String DATA_LIST_FRAG_TAG = "DATALIST_FRAG_TAG";
     private static final String NEW_OBJECT_FRAG_TAG ="NEWOBJECT_FRAG_TAG";
 
+    private DataListFragment dataListFragment;
+    private NewBMObjectFragment newBmoFragment;
+
+    private FragmentManager fragmentManager;
+
+    private Bitmap bitmap;
+    private Uri filePath;
+
+    private static int itemPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_config);
 
-        setFragment(new DataListFragment(), DATA_LIST_FRAG_TAG);
+        if(savedInstanceState == null){
+            fragmentManager = getFragmentManager();
+            dataListFragment = DataListFragment.newInstance();
+            newBmoFragment = NewBMObjectFragment.newInstance();
+        }
+
+       initAllFragment();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
-    /**
-     * Permet de gérer les transitions de fragment
-     * @param fragment
-     */
-    public void setFragment(Fragment fragment, String tag){
+    }
 
-        FragmentManager fragmentManager = getFragmentManager();
+    protected void initAllFragment(){
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.adminFragmentContainer, fragment, tag);
+        ft.add(R.id.adminFragmentContainer, dataListFragment, DATA_LIST_FRAG_TAG);
+        ft.add(R.id.adminFragmentContainer, newBmoFragment, NEW_OBJECT_FRAG_TAG);
+        ft.show(dataListFragment);
+        ft.hide(newBmoFragment);
         ft.commit();
     }
 
     /**
-     * Fires an intent to spin up the "file chooser" UI and select an image.
+     * Affiche le fragment de la liste de de données
+     */
+    protected void showDataListFragment(){
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        if(dataListFragment.isAdded()){
+            ft.show(dataListFragment);
+        }else {
+            ft.add(R.id.adminFragmentContainer, dataListFragment, DATA_LIST_FRAG_TAG);
+        }
+
+        if(newBmoFragment.isAdded()){
+            ft.hide(newBmoFragment);
+        }
+
+        ft.commit();
+    }
+
+    /**
+     * Affiche le fragment du formulaire de création d'un nouvel objet
+     */
+    protected void showNewBMObjectFragment(BMObject bmObject, int position){
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        itemPosition = position ;
+        if(newBmoFragment.isAdded()){
+            newBmoFragment.initAllField(bmObject);
+            ft.show(newBmoFragment);
+        }else {
+            ft.add(R.id.adminFragmentContainer, newBmoFragment, NEW_OBJECT_FRAG_TAG);
+        }
+
+        if(dataListFragment.isAdded()){
+            ft.hide(dataListFragment);
+        }
+
+        ft.commit();
+    }
+
+    /**
+     * Crée un Intent pour déclencher le selecteur de ficher
      */
     public void performFileSearch() {
 
@@ -59,40 +121,96 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode,
-                                 Intent resultData) {
-
-        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
-        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
-        // response to some other intent, and the code below shouldn't run at all.
+                                 Intent data) {
 
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // The document selected by the user won't be returned in the intent.
-            // Instead, a URI to that document will be contained in the return intent
-            // provided to this method as a parameter.
-            // Pull that URI using resultData.getData().
-            Uri uri = null;
-            if (resultData != null) {
-                uri = resultData.getData();
-                //showImage(uri);
+            String fileName = newBmoFragment.getObjectGesteStr()+".PNG";
+            if (data != null && data.getData() != null) {
+                filePath = data.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    createDirAndSaveImageFile(bitmap, fileName);
+                    newBmoFragment.setImgViewGeste(bitmap);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
+    /**
+     * Méthode permet de sauvegarder une image
+     * @param imageToSave
+     * @param fileName
+     */
+    private void createDirAndSaveImageFile(Bitmap imageToSave, String fileName) {
+
+        File direct = new File(getApplicationContext().getFilesDir() + "/images/");
+
+        if (!direct.exists()) {
+            direct.mkdirs();
+        }
+
+        File file = new File(direct, fileName);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            imageToSave.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //Récupère le chemin d'un fichier à partir de son URI
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+
+
     //********************* Redéfinition des méthodes du Listener *********************//
     @Override
     public void onAddNewBtnClicked(View view) {
-        //Ajout du fragment pour la création d'un objet
-        setFragment(new NewBMObjectFragment(), NEW_OBJECT_FRAG_TAG);
+        //On active le fragment de création d'un nouvel objet
+        showNewBMObjectFragment(null, itemPosition);
     }
 
     @Override
     public void onNewBMObjectCreateBtnClicked(BMObject bmObject) {
-        DataListFragment dataListFragment = (DataListFragment) getFragmentManager().findFragmentByTag(DATA_LIST_FRAG_TAG);
-        dataListFragment.addNewBMObject(bmObject);
+
+        if(dataListFragment != null){
+            dataListFragment.addNewBMObject(bmObject, itemPosition);
+            showDataListFragment();
+        }
+
     }
 
     @Override
     public void onFileUploadBtnClicked() {
         performFileSearch();
+    }
+
+    //Met à jour l'objet indiqué avec sa position
+    public void updateBMObject(BMObject bmObject, int position){
+        showNewBMObjectFragment(bmObject, position);
     }
 }
