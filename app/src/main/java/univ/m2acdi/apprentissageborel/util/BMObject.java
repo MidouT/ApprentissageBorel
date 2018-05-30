@@ -8,14 +8,23 @@ public class BMObject implements Serializable {
     private String graphie;
     private String texte_ref;
     private String geste;
-    private String anim;
+    private String motRef;
+    private String imgMot;
 
-    public BMObject(String son, String graphie, String texte_ref, String geste, String anim) {
+    public BMObject(String son, String graphie, String texte_ref, String geste) {
         this.son = son;
         this.graphie = graphie;
         this.texte_ref = texte_ref;
         this.geste = geste;
-        this.anim = anim;
+    }
+
+    public BMObject(String son, String graphie, String texte_ref, String geste, String motRef,String imgMot) {
+        this.son = son;
+        this.graphie = graphie;
+        this.texte_ref = texte_ref;
+        this.geste = geste;
+        this.motRef = motRef;
+        this.imgMot = imgMot;
     }
 
     public BMObject() {
@@ -53,9 +62,17 @@ public class BMObject implements Serializable {
         this.geste = geste;
     }
 
-    public String getAnim() {return anim;}
+    public String getMotRef() {return motRef;}
 
-    public void setAnim(String anim) {
-        this.anim = anim;
+    public void setMotRef(String motRef) {
+        this.motRef = motRef;
+    }
+
+    public String getImgMot() {
+        return imgMot;
+    }
+
+    public void setImgMot(String imgMot) {
+        this.imgMot = imgMot;
     }
 }

@@ -96,7 +96,7 @@ public class NewBMObjectFragment extends Fragment {
             String graphie = formatGraphieStr(edTxtGraphie.getText().toString());
             String textRef = edTxtTextRef.getText().toString();
 
-            BMObject bmObject = new BMObject(son,graphie, textRef, getObjectGesteStr(), getObjectGesteStr());
+            BMObject bmObject = new BMObject(son,graphie, textRef, getObjectGesteStr());
 
             ((DataConfigActivity)getActivity()).onNewBMObjectCreateBtnClicked(bmObject);
         }

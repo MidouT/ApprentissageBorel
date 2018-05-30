@@ -139,7 +139,8 @@ public class DataListFragment extends Fragment {
                 bmObject.setGraphie(jsonObject.getString("graphie"));
                 bmObject.setTexte_ref(jsonObject.getString("texte_ref"));
                 bmObject.setGeste(jsonObject.getString("geste"));
-                bmObject.setAnim(jsonObject.getString("anim"));
+                bmObject.setMotRef(jsonObject.getString("mot_ref"));
+                bmObject.setImgMot(jsonObject.getString("img_mot"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
