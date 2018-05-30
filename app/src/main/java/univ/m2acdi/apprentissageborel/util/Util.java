@@ -1,11 +1,14 @@
 package univ.m2acdi.apprentissageborel.util;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.activity.GestureToSpeechActivity;
+
 public class Util {
+
 
     /**
      * Renvoie l'objet se trouvant dans la position indexé dans le tableau
@@ -236,7 +243,8 @@ public class Util {
                 jsonObj.put("graphie", bmObject.getGraphie());
                 jsonObj.put("texte_ref", bmObject.getTexte_ref());
                 jsonObj.put("geste", bmObject.getGeste());
-                jsonObj.put("anim", bmObject.getAnim());
+                jsonObj.put("mot_ref",bmObject.getMotRef());
+                jsonObj.put("img_mot",bmObject.getImgMot());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -245,6 +253,19 @@ public class Util {
         return jsonArray.toString();
     }
 
-
-
+    public static void showCongratDialog(Activity activity){
+        // Creation de la boite de dialog
+        final Dialog dialog = new Dialog(activity);
+        // Ressource
+        dialog.setContentView(R.layout.dialog);
+        dialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(dialog.isShowing()){
+                    dialog.dismiss();
+                }
+            }
+        }, 4000);
+    }
 }
