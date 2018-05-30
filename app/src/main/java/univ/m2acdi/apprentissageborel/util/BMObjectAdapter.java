@@ -41,10 +41,6 @@ public class BMObjectAdapter extends ArrayAdapter<BMObject> {
         }
 
 
-        //ViewGroup.LayoutParams params = myView.getLayoutParams();
-        //params.height = 300;
-        //myView.setLayoutParams(params);
-
         tvSon = myView.findViewById(R.id.raw_word_textView);
         tvSon.setText(bmObject.getSon());
         tvGraphie = myView.findViewById(R.id.raw_graphie_textView);

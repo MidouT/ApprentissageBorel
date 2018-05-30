@@ -2,14 +2,21 @@ package univ.m2acdi.apprentissageborel.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class Util {
 
@@ -66,16 +73,25 @@ public class Util {
      * @param context
      * @return
      */
-    public static JSONArray readJsonDataFile(Context context, String filename) {
+    public static JSONArray readJsonDataFile(Context context, String fileName) {
         JSONArray jsonArray = null;
-        String jsonStr;
+        InputStream stream;
         try {
-            InputStream is = context.getAssets().open(filename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            jsonStr = new String(buffer, "UTF-8");
+            //Vérification dans ApplicationContext
+            File file = context.getFileStreamPath(fileName);
+            if (file == null || !file.exists()) {
+                // Si le fichier de données n'existe pas encore dans le contexte de l'application on lit dépuis 'assets'
+                System.out.println("================= Asset file read ==================");
+                stream = context.getAssets().open(fileName);
+            } else {
+                System.out.println("================= App context file exist ==================");
+                stream = context.openFileInput(fileName);
+            }
+            int dataSize = stream.available();
+            byte[] buffer = new byte[dataSize];
+            stream.read(buffer);
+            stream.close();
+            String jsonStr = new String(buffer, "UTF-8");
             jsonArray = new JSONArray(jsonStr);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -84,6 +100,26 @@ public class Util {
             e.printStackTrace();
         }
         return jsonArray;
+    }
+
+    /**
+     * Méthode d'écriture (sauvegarde de lise de données
+     *
+     * @param context
+     * @param data
+     */
+    public static void writeJsonDataFile(Context context, String data) {
+
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = context.openFileOutput(Constante.DATA_FILE_NAME, Context.MODE_PRIVATE);
+            outputStream.write(data.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -96,7 +132,40 @@ public class Util {
 
         int image_id = context.getResources().getIdentifier(geste, "drawable", context.getPackageName());
 
-        return context.getResources().getDrawable(image_id);
+        if (image_id != 0){
+            return context.getResources().getDrawable(image_id);
+        }else {
+            Bitmap bitmap = getBitmapFromAppDir(context, geste+".PNG");
+
+            if (bitmap != null){
+                return new BitmapDrawable(context.getResources(), bitmap);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Récupère un objet image (Bitmap) de puis le dossier propre au contexte de l'application
+     *
+     * @param filename
+     * @return
+     */
+    public static Bitmap getBitmapFromAppDir(Context context, String filename) {
+
+        Bitmap bitmap = null;
+        try {
+            String dirPath = context.getFilesDir() + "/images/";
+            File filePath = new File(dirPath,filename);
+            if (filePath.exists()){
+                FileInputStream fileInputStream = new FileInputStream(filePath);
+                bitmap = BitmapFactory.decodeStream(fileInputStream);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     /**
@@ -110,6 +179,11 @@ public class Util {
         return context.getResources().getIdentifier(anim, "drawable", context.getPackageName());
     }*/
 
+    /**
+     * Coverti le tableau json de l'attribut "graphie" en chaine de caractères propre
+     * @param graphie
+     * @return
+     */
     public static String getFormatedGraphieStr(String graphie) {
         String str = "";
         JSONArray jsonArray = null;
@@ -132,20 +206,45 @@ public class Util {
     }
 
     /**
-     * Recupere le bm object d'un son passer en parametre
+     * Recupère l'objet d'un son passer en parametre
      *
      * @param jsonArray
      * @param son
      * @return
      */
     public static BMObject getWordObject(JSONArray jsonArray, String son) {
-        BMObject bm = null;
+        BMObject bm;
         for (int i = 0; i < jsonArray.length(); i++) {
             bm = Util.readNextWord(jsonArray, i);
             if (bm.getSon().toString().equals(son.toString()))
                 return bm;
         }
-        bm = null;
-        return bm;
+        return null;
     }
+
+    /**
+     * Crée un ensemble chaines de caractères à partir de la liste d'objet passer en paramètre
+     * @param bmObjectList
+     * @return
+     */
+    public static String convertBMOBjectListToJSonArray(List<BMObject> bmObjectList) {
+        JSONArray jsonArray = new JSONArray();
+        for (BMObject bmObject : bmObjectList) {
+            JSONObject jsonObj = new JSONObject();
+            try {
+                jsonObj.put("son", bmObject.getSon());
+                jsonObj.put("graphie", bmObject.getGraphie());
+                jsonObj.put("texte_ref", bmObject.getTexte_ref());
+                jsonObj.put("geste", bmObject.getGeste());
+                jsonObj.put("anim", bmObject.getAnim());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(jsonObj);
+        }
+        return jsonArray.toString();
+    }
+
+
+
 }

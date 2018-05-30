@@ -3,6 +3,7 @@ package univ.m2acdi.apprentissageborel.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.activity.DataConfigActivity;
 import univ.m2acdi.apprentissageborel.listener.AdminConfigListener;
 import univ.m2acdi.apprentissageborel.util.BMObject;
+import univ.m2acdi.apprentissageborel.util.Util;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,13 +35,20 @@ public class NewBMObjectFragment extends Fragment {
     private ImageButton fileUploadBtn;
     private Button submitButton;
 
-    private LinearLayout addGraphieLayout;
-
     private AdminConfigListener adminConfigListener;
 
 
     public NewBMObjectFragment() {
         // Required empty public constructor
+    }
+
+    public static NewBMObjectFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        NewBMObjectFragment fragment = new NewBMObjectFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -55,8 +67,6 @@ public class NewBMObjectFragment extends Fragment {
 
         submitButton = view.findViewById(R.id.submit_new_object);
         submitButton.setOnClickListener(onSubmitBtnClckListener);
-
-        addGraphieLayout = view.findViewById(R.id.add_graphie_layout);
 
         return view;
     }
@@ -78,19 +88,68 @@ public class NewBMObjectFragment extends Fragment {
         }
     };
 
+    //Listener pour la validation du formulaire
     View.OnClickListener onSubmitBtnClckListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             String son = edTxtSon.getText().toString();
-            String graphie = edTxtGraphie.getText().toString();
+            String graphie = formatGraphieStr(edTxtGraphie.getText().toString());
             String textRef = edTxtTextRef.getText().toString();
 
-
-
-            BMObject bmObject = new BMObject(son,graphie, textRef, "bm_a");
+            BMObject bmObject = new BMObject(son,graphie, textRef, getObjectGesteStr());
 
             ((DataConfigActivity)getActivity()).onNewBMObjectCreateBtnClicked(bmObject);
         }
     };
+
+    /**
+     * Formate un chaine de caractère sous forme d'un tableau JSON
+     * @param edText
+     * @return
+     */
+    protected String formatGraphieStr(String edText){
+
+        JSONArray jsonArray = new JSONArray();
+
+        if((edText != null) && (!edText.isEmpty())){
+            String[] splitTab = edText.split(" ");
+            for(int i = 0; i < splitTab.length; i++){
+                String str = splitTab[i];
+                jsonArray.put(str);
+            }
+        }
+
+        return jsonArray.toString();
+    }
+
+    /**
+     * Réinitialise les champs à chaque fois que le fragment est réaffiché
+     */
+    public void initAllField(BMObject bmObject){
+        if(bmObject != null){
+            edTxtSon.setText(bmObject.getSon());
+            edTxtGraphie.setText(Util.getFormatedGraphieStr(bmObject.getGraphie()));
+            edTxtTextRef.setText(bmObject.getTexte_ref());
+            imgViewGeste.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
+        }else {
+            edTxtSon.setText("");
+            edTxtGraphie.setText("");
+            edTxtTextRef.setText("");
+            imgViewGeste.setImageBitmap(null);
+        }
+
+
+    }
+
+    public void setImgViewGeste(Bitmap bitmap){
+        imgViewGeste.setImageBitmap(bitmap);
+    }
+
+    // Chaine utilisé comme nom de l'image du geste du mot correspondant
+    public String getObjectGesteStr(){
+        String str = edTxtSon.getText().toString();
+
+        return "bm_"+str;
+    }
 
 }
