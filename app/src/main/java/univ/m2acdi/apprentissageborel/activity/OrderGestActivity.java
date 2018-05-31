@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -36,7 +35,6 @@ public class OrderGestActivity extends AppCompatActivity {
     private Boolean flag;
     private RelativeLayout mylayout;
     private RelativeLayout find_layout;
-   // private RelativeLayout.LayoutParams layoutParams;
     private BMObject bm;
     private List<ImageView> wordimages;
     private static int image_rank;
@@ -60,8 +58,8 @@ public class OrderGestActivity extends AppCompatActivity {
         wordimages=new ArrayList<>();
         flag = false;
         read_text = findViewById(R.id.dispay_word);
-        mylayout = (RelativeLayout) findViewById(R.id.image_layout);
-        find_layout = (RelativeLayout) findViewById(R.id.find_layout);
+        mylayout = findViewById(R.id.image_layout);
+        find_layout = findViewById(R.id.find_layout);
         //layoutParams=null;
         nextButton = findViewById(R.id.btn_next);
         previousButton=findViewById(R.id.btn_prec);
@@ -71,7 +69,7 @@ public class OrderGestActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-       // imageButton.setEnabled(flag);
+
         nextButton.setOnClickListener(onClickListener);
         previousButton.setOnClickListener(onClickListener);
         showWordAndimage();

@@ -39,7 +39,6 @@ public class GestureToSpeechActivity extends Activity {
     private TextView textUser;
 
     private static int index = 0;
-    private static Boolean flag = false;
 
     private BMObject bmObject;
     private static JSONArray jsonArray;

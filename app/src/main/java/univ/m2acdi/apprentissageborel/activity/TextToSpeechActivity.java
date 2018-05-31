@@ -61,7 +61,7 @@ public class TextToSpeechActivity extends Activity {
         speechBtnPrompt.setVisibility(View.INVISIBLE);
 
         stepSuccessButton = findViewById(R.id.step_success_btn);
-        stepSuccessButton.setVisibility(View.INVISIBLE);
+        //stepSuccessButton.setVisibility(View.INVISIBLE);
 
         repeatButton = findViewById(R.id.speech_text_repeat_btn);
         repeatButton.setOnClickListener(onRepeatSpeechBtnClickListener);
@@ -85,6 +85,8 @@ public class TextToSpeechActivity extends Activity {
     View.OnClickListener onSpeechPromptBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            speechBtnPrompt.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "icon_micro_on"));
+            speechBtnPrompt.setVisibility(View.VISIBLE);
             speechRecognizeManager.startListeningSpeech();
         }
     };
@@ -173,7 +175,7 @@ public class TextToSpeechActivity extends Activity {
 
         @Override
         public void onEndOfSpeech() {
-
+            speechBtnPrompt.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "icon_micro_off"));
         }
 
         @Override
@@ -227,6 +229,7 @@ public class TextToSpeechActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
+            speechBtnPrompt.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "icon_micro_on"));
             speechBtnPrompt.setVisibility(View.VISIBLE);
             speechRecognizeManager.startListeningSpeech();
 
