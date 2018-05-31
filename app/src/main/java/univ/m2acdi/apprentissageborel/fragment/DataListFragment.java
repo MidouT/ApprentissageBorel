@@ -27,6 +27,7 @@ import univ.m2acdi.apprentissageborel.listener.AdminConfigListener;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.BMObjectAdapter;
 import univ.m2acdi.apprentissageborel.util.Constante;
+import univ.m2acdi.apprentissageborel.util.ExerciseObject;
 import univ.m2acdi.apprentissageborel.util.Util;
 
 /**
@@ -150,6 +151,30 @@ public class DataListFragment extends Fragment {
         return objectArrayList;
     }
 
+
+    /**
+     * Lis le fichier de données et renvoie une liste d'objet (ExerciseObject)
+     * @return
+     */
+    private ArrayList<ExerciseObject> getAllDataExercise(){
+        ArrayList<ExerciseObject> objectArrayList = new ArrayList<>();
+        JSONArray jsonArray = Util.readJsonDataFile(getActivity().getApplicationContext(), Constante.DATA_FILE_NAME);
+        for(int i = 0; i < jsonArray.length(); i++){
+            ExerciseObject exerciseObject = new ExerciseObject();
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                exerciseObject.setSon(jsonObject.getString("son"));
+                exerciseObject.setAllographe(jsonObject.getString("graphie"));
+                exerciseObject.setMots(jsonObject.getString("texte_ref"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            objectArrayList.add(exerciseObject);
+        }
+
+        return objectArrayList;
+    }
+
     /**
      * Ajout un item à la listView
      * @param bmObject
@@ -176,6 +201,5 @@ public class DataListFragment extends Fragment {
         String data = Util.convertBMOBjectListToJSonArray(bmObjectList);
         Util.writeJsonDataFile(getActivity().getApplicationContext(), data);
     }
-
 
 }
