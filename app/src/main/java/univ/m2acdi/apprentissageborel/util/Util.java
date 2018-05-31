@@ -175,16 +175,6 @@ public class Util {
         return bitmap;
     }
 
-    /**
-     * Récupère un id de ressource (int)
-     *
-     * @param
-     * @return
-     */
-    /*public static int getRessourceId(Context context, String anim) {
-
-        return context.getResources().getIdentifier(anim, "drawable", context.getPackageName());
-    }*/
 
     /**
      * Coverti le tableau json de l'attribut "graphie" en chaine de caractères propre

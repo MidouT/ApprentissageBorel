@@ -32,7 +32,6 @@ public class BMObjectAdapter extends ArrayAdapter<BMObject> {
 
         BMObject bmObject = getItem(position);
 
-        //Check if an existing view is being reused, otherwise inflate the view
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             myView = layoutInflater.inflate(xmlRessoruceID, parent, false);

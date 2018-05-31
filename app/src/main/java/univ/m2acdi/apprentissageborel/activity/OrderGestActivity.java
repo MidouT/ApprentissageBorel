@@ -60,7 +60,6 @@ public class OrderGestActivity extends AppCompatActivity {
         read_text = findViewById(R.id.dispay_word);
         mylayout = findViewById(R.id.image_layout);
         find_layout = findViewById(R.id.find_layout);
-        //layoutParams=null;
         nextButton = findViewById(R.id.btn_next);
         previousButton=findViewById(R.id.btn_prec);
 
