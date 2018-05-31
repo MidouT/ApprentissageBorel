@@ -78,6 +78,8 @@ public class TextToSpeechActivity extends Activity {
         super.onStart();
     }
 
+
+
     // ************************* LISTENERS DE BUTTONS *********************************
 
     View.OnClickListener onSpeechPromptBtnClickListener = new View.OnClickListener() {
