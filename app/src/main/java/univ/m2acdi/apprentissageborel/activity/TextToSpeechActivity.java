@@ -76,8 +76,6 @@ public class TextToSpeechActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        //textSpeechTask = new TTSpeechAsyncTask();
-        //textSpeechTask.execute();
     }
 
     // ************************* LISTENERS DE BUTTONS *********************************
@@ -211,7 +209,6 @@ public class TextToSpeechActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Toast.makeText(getApplicationContext(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
         }
 
         @Override

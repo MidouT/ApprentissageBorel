@@ -16,9 +16,6 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import pl.droidsonroids.gif.GifImageView;
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.SpeechRecognizeManager;
@@ -29,7 +26,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class GestureToSpeechActivity extends Activity {
 
-    //private TextView textView ;
     private ImageView imageView ;
     private ImageButton imageButtonNext;
     private ImageButton imageButtonPrec;
@@ -54,7 +50,6 @@ public class GestureToSpeechActivity extends Activity {
 
         bmObject = Util.readNextWord(jsonArray, index);
         texteViewLettres = findViewById(R.id.texteViewLettres);
-        //gifImageView = findViewById(R.id.gifImageView);
         imageView = findViewById(R.id.word_img_view);
         textUser = findViewById(R.id.text_user);
         wordImgIndice = findViewById(R.id.word_img_view);
@@ -72,7 +67,6 @@ public class GestureToSpeechActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        //imageButtonNext.setEnabled(flag);
         imageButtonNext.setOnClickListener(onClickListener);
         imageButtonPrec.setOnClickListener(onClickListener);
 
@@ -223,7 +217,6 @@ public class GestureToSpeechActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Toast.makeText(getApplicationContext(), "Début du traitement asynchrone", Toast.LENGTH_LONG).show();
         }
 
         @Override
