@@ -154,7 +154,6 @@ public class TrainSectionFragment extends Fragment {
     private ArrayList<ExerciseObject> getAllExerciseData(){
         ArrayList<ExerciseObject> objectArrayList = new ArrayList<>();
         JSONArray jsonArray = Util.readJsonDataFile(getActivity().getApplicationContext(), Constante.EXERCISE_FILE_NAME);
-        System.out.println("===================== Exo data length: "+jsonArray.length());
         for(int i = 0; i < jsonArray.length(); i++){
             ExerciseObject exerciseObject = new ExerciseObject();
             try {
