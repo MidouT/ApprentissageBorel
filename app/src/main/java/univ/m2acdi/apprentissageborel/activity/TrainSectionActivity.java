@@ -25,7 +25,7 @@ public class TrainSectionActivity extends Activity implements AdminConfigListene
     private static final String TRAIN_SECTION_FRAG_TAG = "TRAIN_SECTION_FRAG_TAG";
     private static final String NEW_EXO_OBJECT_FRAG_TAG ="NEW_EXO_OBJECT_FRAG_TAG";
 
-    private static int itemPosition;
+    private static int itemPosition = -1;
 
     private TrainSectionFragment trainSectionFragment;
     private NewExerciseObjectFragment newExoObjectFragment;
@@ -104,7 +104,7 @@ public class TrainSectionActivity extends Activity implements AdminConfigListene
 
     @Override
     public void onAddNewBtnClicked(View view) {
-        showNewExoObjectFragment(null, itemPosition);
+        showNewExoObjectFragment(null, -1);
     }
 
     @Override
