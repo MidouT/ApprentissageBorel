@@ -190,9 +190,12 @@ public class GestureToSpeechActivity extends Activity {
             int i = 0;
             String text = "";
             while(i < chaine.length()){
-                if(chaine.charAt(i) == c.charAt(0)){
-                    text += "<font color='red'>" + chaine.substring(i,i+c.length()) + "</font>";
-                    i += c.length();
+                if((chaine.charAt(i) == c.charAt(0)) && chaine.substring(i,i+c.length()).equals(c)){
+                      text += "<font color='red'>" + chaine.substring(i,i+c.length()) + "</font>";
+                        i += c.length();
+                        System.out.println("============"+text+"============");
+
+
                 }else{
                     text += String.valueOf(chaine.charAt(i));
                     i++;
