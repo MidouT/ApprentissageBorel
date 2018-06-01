@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.MenuListFragment;
@@ -46,11 +47,16 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
         //Ajout de la barre d'outils
         Toolbar toolbar= findViewById(R.id.toolbar_main);
         appCompatDelegate.setSupportActionBar(toolbar);
-
-        //Vérification des paramètres d'initialisation nécessaires à la synthèse vocale
         checkTTS();
+        Intent intent = getIntent();
+        Boolean isBackTo = intent.getBooleanExtra("back_to_main", false);
+        if(isBackTo == true){
+            showFragment(new MenuListFragment());
+        }else {
+            //Vérification des paramètres d'initialisation nécessaires à la synthèse vocale
+            showFragment(new WelcomeFragment());
+        }
 
-        showFragment(new WelcomeFragment());
     }
 
     @Override
@@ -58,6 +64,15 @@ public class MainActivity extends Activity implements AppCompatCallback, MenuLis
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        textSpeaker.destroy();
+        MainActivity.this.finish();
+        //startActivity(intent);
+
+    }
 
     /**
      * Permet de gérer les transitions de fragment

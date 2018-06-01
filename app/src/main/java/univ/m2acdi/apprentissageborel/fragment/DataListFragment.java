@@ -153,29 +153,6 @@ public class DataListFragment extends Fragment {
 
 
     /**
-     * Lis le fichier de données et renvoie une liste d'objet (ExerciseObject)
-     * @return
-     */
-    private ArrayList<ExerciseObject> getAllDataExercise(){
-        ArrayList<ExerciseObject> objectArrayList = new ArrayList<>();
-        JSONArray jsonArray = Util.readJsonDataFile(getActivity().getApplicationContext(), Constante.DATA_FILE_NAME);
-        for(int i = 0; i < jsonArray.length(); i++){
-            ExerciseObject exerciseObject = new ExerciseObject();
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                exerciseObject.setSon(jsonObject.getString("son"));
-                exerciseObject.setAllographe(jsonObject.getString("graphie"));
-                exerciseObject.setMots(jsonObject.getString("texte_ref"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            objectArrayList.add(exerciseObject);
-        }
-
-        return objectArrayList;
-    }
-
-    /**
      * Ajout un item à la listView
      * @param bmObject
      */
@@ -199,7 +176,7 @@ public class DataListFragment extends Fragment {
 
     public void writeItems() {
         String data = Util.convertBMOBjectListToJSonArray(bmObjectList);
-        Util.writeJsonDataFile(getActivity().getApplicationContext(), data);
+        Util.writeJsonDataFile(getActivity().getApplicationContext(), data, Constante.DATA_FILE_NAME);
     }
 
 }

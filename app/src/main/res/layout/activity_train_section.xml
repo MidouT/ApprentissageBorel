@@ -1,134 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.TrainSectionActivity">
+    android:layout_marginLeft="@dimen/dim_horizontal_margin"
+    android:layout_marginRight="@dimen/dim_horizontal_margin"
+    android:background="@drawable/bckgrnd"
+    tools:context=".activity.TrainSectionActivity" >
 
-    <TextView
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/trainFragmentContainer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saisie Exercice"
-        android:gravity="center"
-        android:textSize="75dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TableLayout
-            android:id="@+id/idTable"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-            <TableRow
-                android:layout_weight="1"
-                android:layout_marginBottom="20dp"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/idMots"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="Mots"
-                    android:textSize="@dimen/dim_text_size_normal" />
-                <EditText
-                    android:id="@+id/idValeurMots"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="2"
-                    android:text=""
-                    android:textSize="@dimen/dim_text_size_normal"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/idErrorMots"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text=""
-                    android:textColor="#FFFFFF"
-                    android:textSize="25dp" />
-            </TableRow>
-            <TableRow
-                android:layout_weight="1"
-                android:layout_marginBottom="20dp"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/idAllographe"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="Allographe"
-                    android:textSize="@dimen/dim_text_size_normal" />
-                <EditText
-                    android:id="@+id/idValeurAllographe"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="2"
-                    android:text=""
-                    android:textSize="@dimen/dim_text_size_normal"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/idErrorAllographe"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text=""
-                    android:textColor="#FFFFFF"
-                    android:textSize="25dp" />
-            </TableRow>
-            <TableRow
-                android:layout_weight="1"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/idSon"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:text="Son"
-                    android:textSize="@dimen/dim_text_size_normal" />
-                <EditText
-                    android:id="@+id/idValeurSon"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="2"
-                    android:text=""
-                    android:textSize="@dimen/dim_text_size_normal"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:id="@+id/idErrorSon"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text=""
-                    android:textColor="#FFFFFF"
-                    android:textSize="25dp" />
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <Button
-            android:id="@+id/buttonValider"
-            android:layout_width="250dp"
-            android:layout_height="150dp"
-            android:layout_marginLeft="480dp"
-            android:layout_marginTop="50dp"
-            android:text="Valider" />
-    </LinearLayout>
-</LinearLayout>
+    </FrameLayout>
+
+
+</RelativeLayout>

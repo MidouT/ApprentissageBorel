@@ -8,6 +8,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 
 import univ.m2acdi.apprentissageborel.R;
+import univ.m2acdi.apprentissageborel.util.Constante;
 import univ.m2acdi.apprentissageborel.util.TextSpeaker;
 import univ.m2acdi.apprentissageborel.util.Util;
 
@@ -30,7 +31,7 @@ public class SectionIntroductActivity extends Activity {
         Toast.makeText(this, "Section" + section, Toast.LENGTH_SHORT).show();
 
         introductSection();
-        jsonArray = Util.readJsonDataFile(this, "data_file.json");
+        jsonArray = Util.readJsonDataFile(this, Constante.DATA_FILE_NAME);
 
     }
 

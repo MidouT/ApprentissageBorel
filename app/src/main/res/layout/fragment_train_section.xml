@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dim_vertical_margin"
+    android:layout_marginLeft="@dimen/dim_horizontal_margin"
+    android:layout_marginRight="@dimen/dim_horizontal_margin"
+    tools:context=".fragment.TrainSectionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dim_horizontal_margin"
+            android:layout_alignBaseline="@id/data_config_addNew_btn"
+            android:text="Données de l'exercice"
+            android:textColor="#ffa755"
+            android:textStyle="bold"
+            android:textSize="42dp"/>
+
+        <Button
+            android:id="@+id/addNewExo_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textAllCaps="false"
+            android:drawablePadding="20dp"
+            android:layout_marginEnd="@dimen/dim_horizontal_margin"
+            android:drawableLeft="@drawable/add_more_72"
+            android:text="Nouveau"
+            android:textStyle="normal"
+            android:fontFamily="Consolas"
+            android:textSize="@dimen/dim_text_size_normal"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/exo_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:divider="#e8e9a811"
+        android:dividerHeight="2dp"
+        android:background="@drawable/listview_border">
+
+    </ListView>
+
+</LinearLayout>

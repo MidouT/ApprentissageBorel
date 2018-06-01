@@ -18,7 +18,9 @@ public class BMObjectAdapter extends ArrayAdapter<BMObject> {
     private TextView tvSon;
     private TextView tvGraphie;
     private TextView tvRefText;
+    private TextView tvRefMot;
     private ImageView ivGeste;
+    private ImageView ivRefMot;
 
     public BMObjectAdapter(Context context, int resource, ArrayList<BMObject> bmObjectList) {
         super(context, resource, bmObjectList);
@@ -46,8 +48,12 @@ public class BMObjectAdapter extends ArrayAdapter<BMObject> {
         tvGraphie.setText(Util.getFormatedGraphieStr(bmObject.getGraphie()));
         tvRefText = myView.findViewById(R.id.raw_refText_textView);
         tvRefText.setText(bmObject.getTexte_ref());
+        tvRefMot = myView.findViewById(R.id.raw_refMot_textView);
+        tvRefMot.setText(bmObject.getMotRef());
         ivGeste = myView.findViewById(R.id.raw_geste_imageView);
         ivGeste.setImageDrawable(Util.getImageViewByName(getContext(), bmObject.getGeste()));
+        ivRefMot = myView.findViewById(R.id.raw_mot_imageView);
+        ivRefMot.setImageDrawable(Util.getImageViewByName(getContext(), bmObject.getImgMot()));
 
         return myView;
     }

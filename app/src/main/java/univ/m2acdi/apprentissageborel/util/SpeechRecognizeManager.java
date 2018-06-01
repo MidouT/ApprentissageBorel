@@ -1,14 +1,10 @@
 package univ.m2acdi.apprentissageborel.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.widget.ImageView;
-
-import java.util.zip.CheckedOutputStream;
 
 public class SpeechRecognizeManager {
 
@@ -43,7 +39,6 @@ public class SpeechRecognizeManager {
     }
 
 
-
     private SpeechRecognizer getSpeechRecognizer(RecognitionListener recognitionListener){
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity);
@@ -51,5 +46,12 @@ public class SpeechRecognizeManager {
         }
         return speechRecognizer;
     }
-    // Fin reconnaissance vocale
+
+    public void destroy(){
+        if (speechRecognizer!=null) {
+            speechRecognizer.cancel();
+        }
+
+        speechRecognizer.destroy();
+    }
 }

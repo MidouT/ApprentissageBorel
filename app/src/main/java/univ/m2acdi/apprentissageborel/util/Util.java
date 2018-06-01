@@ -88,10 +88,8 @@ public class Util {
             File file = context.getFileStreamPath(fileName);
             if (file == null || !file.exists()) {
                 // Si le fichier de données n'existe pas encore dans le contexte de l'application on lit dépuis 'assets'
-                System.out.println("================= Asset file read ==================");
                 stream = context.getAssets().open(fileName);
             } else {
-                System.out.println("================= App context file exist ==================");
                 stream = context.openFileInput(fileName);
             }
             int dataSize = stream.available();
@@ -115,12 +113,12 @@ public class Util {
      * @param context
      * @param data
      */
-    public static void writeJsonDataFile(Context context, String data) {
+    public static void writeJsonDataFile(Context context, String data, String fileName) {
 
         FileOutputStream outputStream;
 
         try {
-            outputStream = context.openFileOutput(Constante.DATA_FILE_NAME, Context.MODE_PRIVATE);
+            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             outputStream.write(data.getBytes());
             outputStream.close();
         } catch (Exception e) {
@@ -235,6 +233,27 @@ public class Util {
                 jsonObj.put("geste", bmObject.getGeste());
                 jsonObj.put("mot_ref",bmObject.getMotRef());
                 jsonObj.put("img_mot",bmObject.getImgMot());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(jsonObj);
+        }
+        return jsonArray.toString();
+    }
+
+    /**
+     * Version de la méthode ci dessous pour les données d'exercice
+     * @param exerciseObjectList
+     * @return
+     */
+    public static String convertExoOBjectListToJSonArray(List<ExerciseObject> exerciseObjectList) {
+        JSONArray jsonArray = new JSONArray();
+        for (ExerciseObject exoObject : exerciseObjectList) {
+            JSONObject jsonObj = new JSONObject();
+            try {
+                jsonObj.put("mot", exoObject.getMot());
+                jsonObj.put("graphie", exoObject.getAllographe());
+                jsonObj.put("son", exoObject.getSon());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

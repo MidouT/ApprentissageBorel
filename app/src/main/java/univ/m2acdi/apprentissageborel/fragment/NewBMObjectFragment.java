@@ -35,6 +35,9 @@ public class NewBMObjectFragment extends Fragment {
     private ImageButton fileUploadBtn;
     private Button submitButton;
 
+    private String refMot;
+    private String refMotImgName;
+
     private AdminConfigListener adminConfigListener;
 
 
@@ -96,7 +99,7 @@ public class NewBMObjectFragment extends Fragment {
             String graphie = formatGraphieStr(edTxtGraphie.getText().toString());
             String textRef = edTxtTextRef.getText().toString();
 
-            BMObject bmObject = new BMObject(son,graphie, textRef, getObjectGesteStr());
+            BMObject bmObject = new BMObject(son,graphie, textRef, getObjectGesteStr(), refMot, refMotImgName);
 
             ((DataConfigActivity)getActivity()).onNewBMObjectCreateBtnClicked(bmObject);
         }
@@ -131,14 +134,18 @@ public class NewBMObjectFragment extends Fragment {
             edTxtGraphie.setText(Util.getFormatedGraphieStr(bmObject.getGraphie()));
             edTxtTextRef.setText(bmObject.getTexte_ref());
             imgViewGeste.setImageDrawable(Util.getImageViewByName(getActivity().getApplicationContext(), bmObject.getGeste()));
+
+            refMot = bmObject.getMotRef();
+            refMotImgName = bmObject.getImgMot();
         }else {
             edTxtSon.setText("");
             edTxtGraphie.setText("");
             edTxtTextRef.setText("");
             imgViewGeste.setImageBitmap(null);
+
+            refMot = "Mot-ref";
+            refMotImgName = "bm_mot_ref";
         }
-
-
     }
 
     public void setImgViewGeste(Bitmap bitmap){
