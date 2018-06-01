@@ -2,7 +2,7 @@ package univ.m2acdi.apprentissageborel.util;
 
 public class ExerciseObject {
 
-    private String mots;
+    private String mot;
     private String allographe;
     private String son;
 
@@ -10,18 +10,18 @@ public class ExerciseObject {
 
     }
 
-    public ExerciseObject(String mots, String allographe, String son) {
-        this.mots = mots;
+    public ExerciseObject(String mot, String allographe, String son) {
+        this.mot = mot;
         this.allographe = allographe;
         this.son = son;
     }
 
-    public String getMots() {
-        return mots;
+    public String getMot() {
+        return mot;
     }
 
-    public void setMots(String mots) {
-        this.mots = mots;
+    public void setMot(String mot) {
+        this.mot = mot;
     }
 
     public String getAllographe() {

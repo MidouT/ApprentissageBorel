@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/dim_vertical_margin"
-    android:layout_marginTop="@dimen/dim_vertical_margin"
     android:orientation="horizontal"
-    tools:context=".fragment.NewBMObjectFragment">
+    tools:context=".fragment.NewExerciseObjectFragment">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -21,6 +19,20 @@
         android:layout_weight="3"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Saisie Exercice"
+                android:textSize="75dp" />
+
+        </LinearLayout>
+
         <TableLayout
             android:id="@+id/idTable"
             android:layout_width="match_parent"
@@ -34,20 +46,23 @@
                 android:gravity="center">
 
                 <TextView
+                    android:id="@+id/idMot"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_horizontal_margin"
+                    android:layout_weight="1"
+                    android:text="Mots"
+                    android:textSize="@dimen/dim_text_size_normal"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_mot_id"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dim_horizontal_margin"
                     android:layout_weight="2"
-                    android:text="Son"
+                    android:text=""
                     android:textSize="@dimen/dim_text_size_normal" />
-
-                <EditText
-                    android:id="@+id/add_son_editext"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:textSize="@dimen/dim_text_size_normal" />
-
             </TableRow>
 
             <TableRow
@@ -56,22 +71,22 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/add_graphie_textView"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_horizontal_margin"
+                    android:layout_weight="1"
+                    android:text="Allographe"
+                    android:textSize="@dimen/dim_text_size_normal"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_allographe_id"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dim_horizontal_margin"
                     android:layout_weight="2"
-                    android:text="Grapies"
+                    android:text=""
                     android:textSize="@dimen/dim_text_size_normal" />
-
-                <EditText
-                    android:id="@+id/add_graphie_editText"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:hint="Saisir les graphies"
-                    android:textSize="@dimen/dim_text_size_normal" />
-
             </TableRow>
 
             <TableRow
@@ -79,71 +94,48 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/add_textRef_textView"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dim_horizontal_margin"
+                    android:layout_weight="1"
+                    android:text="Son"
+                    android:textSize="@dimen/dim_text_size_normal"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_son_id"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dim_horizontal_margin"
                     android:layout_weight="2"
-                    android:text="Texte de référence"
+                    android:text=""
                     android:textSize="@dimen/dim_text_size_normal" />
-
-                <EditText
-                    android:id="@+id/add_textRef_editText"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:textSize="@dimen/dim_text_size_normal" />
-
             </TableRow>
 
             <TableRow android:gravity="center">
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dim_horizontal_margin"
-                    android:layout_weight="2"
-                    android:text="Image du geste"
-                    android:textSize="@dimen/dim_text_size_normal" />
-
-                <ImageView
-                    android:id="@+id/add_geste_imgView"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="5" />
-
-                <ImageButton
-                    android:id="@+id/add_file_upload_btn"
+                <Button
+                    android:id="@+id/submit_exo_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/file_upload_72" />
+                    android:text="Valider"
+                    android:textAllCaps="false"
+                    android:textColor="#2D3E4E"
+                    android:textSize="30dp"
+                    android:textStyle="italic" />
 
             </TableRow>
 
         </TableLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/submit_new_object"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="Valider"
-                android:textAllCaps="false"
-                android:textColor="#2D3E4E"
-                android:textSize="30dp"
-                android:textStyle="italic" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="0dp"
@@ -151,6 +143,5 @@
         android:layout_weight="1">
 
     </LinearLayout>
-
 
 </LinearLayout>

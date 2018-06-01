@@ -20,6 +20,7 @@ import univ.m2acdi.apprentissageborel.fragment.DataListFragment;
 import univ.m2acdi.apprentissageborel.fragment.NewBMObjectFragment;
 import univ.m2acdi.apprentissageborel.listener.AdminConfigListener;
 import univ.m2acdi.apprentissageborel.util.BMObject;
+import univ.m2acdi.apprentissageborel.util.ExerciseObject;
 
 public class DataConfigActivity extends Activity implements AdminConfigListener{
 
@@ -36,7 +37,7 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
     private Bitmap bitmap;
     private Uri filePath;
 
-    private static int itemPosition;
+    private static int itemPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,31 +168,11 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
     }
 
 
-    //Récupère le chemin d'un fichier à partir de son URI
-    public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-    }
-
-
-
     //********************* Redéfinition des méthodes du Listener *********************//
     @Override
     public void onAddNewBtnClicked(View view) {
         //On active le fragment de création d'un nouvel objet
-        showNewBMObjectFragment(null, itemPosition);
+        showNewBMObjectFragment(null, -1);
     }
 
     @Override
@@ -201,6 +182,11 @@ public class DataConfigActivity extends Activity implements AdminConfigListener{
             dataListFragment.addNewBMObject(bmObject, itemPosition);
             showDataListFragment();
         }
+
+    }
+
+    @Override
+    public void onNewExoObjectCreateBtnClicked(ExerciseObject exerciseObject) {
 
     }
 

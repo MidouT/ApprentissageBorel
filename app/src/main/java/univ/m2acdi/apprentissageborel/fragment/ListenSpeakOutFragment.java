@@ -2,9 +2,7 @@ package univ.m2acdi.apprentissageborel.fragment;
 
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -31,8 +29,8 @@ public class ListenSpeakOutFragment extends Fragment {
     private TextView tvTextRef;
     private ImageView ivGeste;
 
-    private ImageView nextButtonRight;
-    private ImageView nextButtonLeft;
+    private ImageView nextButton;
+    private ImageView previousButton;
 
     private BMObject bmObject;
     private static JSONArray jsonArray;
@@ -56,11 +54,11 @@ public class ListenSpeakOutFragment extends Fragment {
         ivGeste = view.findViewById(R.id.word_img_view);
 
 
-        nextButtonRight = view.findViewById(R.id.btn_next_right);
-        nextButtonRight.setOnClickListener(onNextBtnClickListener);
+        nextButton = view.findViewById(R.id.btn_next_right);
+        nextButton.setOnClickListener(onNextBtnClickListener);
 
-        nextButtonLeft = view.findViewById(R.id.btn_next_left);
-        nextButtonLeft.setOnClickListener(onNextBtnClickListener);
+        previousButton = view.findViewById(R.id.btn_next_left);
+        previousButton.setOnClickListener(onNextBtnClickListener);
 
         ((TextToSpeechActivity)getActivity()).createNewSpeechTask();
 

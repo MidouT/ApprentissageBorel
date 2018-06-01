@@ -16,42 +16,31 @@
         android:background="@drawable/layout_border">
 
         <TextView
-            android:id="@+id/raw_word_textView"
+            android:id="@+id/exo_word_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:textSize="60dp"
+            android:textSize="40dp"
             android:textColor="#252424"
-            android:text="son"/>
-        <TextView
-            android:id="@+id/raw_graphie_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:lineSpacingMultiplier="1.5"
-            android:lineSpacingExtra="6dp"
-            android:textSize="30dp"
-            android:textColor="#6aaf31"
-            android:text="Graphie"
-            android:layout_below="@id/raw_word_textView"/>
+            android:text="Mot"/>
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="3"
         android:gravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="@dimen/dim_horizontal_margin"
         android:background="@drawable/layout_border">
 
         <TextView
-            android:id="@+id/raw_refText_textView"
+            android:id="@+id/exo_allographe_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ref text"
+            android:text="Allographe"
             android:textColor="#252424"
             android:lineSpacingMultiplier="1.5"
             android:lineSpacingExtra="6dp"
@@ -62,25 +51,6 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:layout_weight="3"
-        android:background="@drawable/layout_border">
-
-        <ImageView
-            android:id="@+id/raw_geste_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="170dp"
-            android:scaleType="fitXY"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
         android:layout_weight="3"
         android:gravity="center"
         android:layout_marginStart="16dp"
@@ -88,10 +58,10 @@
         android:background="@drawable/layout_border">
 
         <TextView
-            android:id="@+id/raw_refMot_textView"
+            android:id="@+id/exo_son_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ref mot"
+            android:text="Tab son"
             android:textColor="#252424"
             android:lineSpacingMultiplier="1.5"
             android:lineSpacingExtra="6dp"
@@ -99,22 +69,5 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:layout_weight="3">
-
-        <ImageView
-            android:id="@+id/raw_mot_imageView"
-            android:layout_width="150dp"
-            android:layout_height="160dp"
-            android:scaleType="fitXY"/>
-
-    </RelativeLayout>
 
 </LinearLayout>

@@ -4,21 +4,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.fragment.ListenSpeakOutFragment;
@@ -31,13 +26,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class TextToSpeechActivity extends Activity {
 
     private final int SHORT_DURATION = 1000;
+    private static int repeatcount;
 
     private ImageView speechBtnPrompt;
     private ImageView repeatButton;
     private ImageView stepSuccessButton;
 
     private TextSpeaker textSpeaker;
-    private static int repeatCount = 0;
 
     private TTSpeechAsyncTask textSpeechTask;
     private SpeechRecognizeManager speechRecognizeManager;
@@ -50,18 +45,19 @@ public class TextToSpeechActivity extends Activity {
         setContentView(R.layout.activity_text_to_speech);
 
         lspFragment = new ListenSpeakOutFragment();
-
         setFragment(lspFragment);
 
+        repeatcount = 0;
+
         textSpeaker = (TextSpeaker) getIntent().getSerializableExtra("speaker");
-        textSpeaker.setPitchRate(0.7f);
+        //textSpeaker.setPitchRate(0.7f);
 
         speechBtnPrompt = findViewById(R.id.speech_prompt_btn);
         speechBtnPrompt.setOnClickListener(onSpeechPromptBtnClickListener);
         speechBtnPrompt.setVisibility(View.INVISIBLE);
 
         stepSuccessButton = findViewById(R.id.step_success_btn);
-        //stepSuccessButton.setVisibility(View.INVISIBLE);
+        stepSuccessButton.setVisibility(View.INVISIBLE);
 
         repeatButton = findViewById(R.id.speech_text_repeat_btn);
         repeatButton.setOnClickListener(onRepeatSpeechBtnClickListener);
@@ -69,13 +65,26 @@ public class TextToSpeechActivity extends Activity {
         speechRecognizeManager = new SpeechRecognizeManager(this);
         speechRecognizeManager.initVoiceRecognizer(recognitionListener);
 
-        //speakOutViewText();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        textSpeaker.destroy();
+        speechRecognizeManager.destroy();
+
+        Intent intent = new Intent(this,MainActivity.class);
+
+        intent.putExtra("back_to_main",true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        TextToSpeechActivity.this.finish();
+        startActivity(intent);
     }
 
 
@@ -113,6 +122,9 @@ public class TextToSpeechActivity extends Activity {
         ft.commit();
     }
 
+    /**
+     *
+     */
     public void speakOutViewText() {
         TextView textView = findViewById(R.id.word_text_view);
         String text = textView.getText().toString();
@@ -176,6 +188,22 @@ public class TextToSpeechActivity extends Activity {
         @Override
         public void onEndOfSpeech() {
             speechBtnPrompt.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "icon_micro_off"));
+            if(repeatcount == 2){
+
+                TextView textView = findViewById(R.id.text_ref_view);
+                String text = textView.getText().toString();
+
+                try {
+                    SECONDS.sleep(1);
+                    speakOut(text);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                repeatcount = 0;
+            }
+
+            repeatcount++;
         }
 
         @Override
@@ -185,10 +213,23 @@ public class TextToSpeechActivity extends Activity {
 
         @Override
         public void onResults(Bundle results) {
+
+            TextView textView = findViewById(R.id.word_text_view);
+            String son = textView.getText().toString();
+
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
-            speechBtnPrompt.setVisibility(View.INVISIBLE);
-            stepSuccessButton.setVisibility(View.VISIBLE);
+            if(data != null && data.size() > 0){
+                for (int i = 0; i < data.size(); i++){
+                    if(data.get(i).toLowerCase().contains(son.toLowerCase())){
+                        speechBtnPrompt.setVisibility(View.INVISIBLE);
+                        stepSuccessButton.setVisibility(View.VISIBLE);
+                        repeatcount = 0 ;
+                        break;
+                    }
+                }
+            }
+
 
         }
 

@@ -1,10 +1,9 @@
 package univ.m2acdi.apprentissageborel.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.text.Html;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+
 import univ.m2acdi.apprentissageborel.R;
 import univ.m2acdi.apprentissageborel.util.BMObject;
 import univ.m2acdi.apprentissageborel.util.SpeechRecognizeManager;
@@ -75,6 +75,20 @@ public class GestureToSpeechActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        speechRecognizeManager.destroy();
+
+        Intent intent = new Intent(this,MainActivity.class);
+
+        intent.putExtra("back_to_main",true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        GestureToSpeechActivity.this.finish();
+        startActivity(intent);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -168,9 +182,7 @@ public class GestureToSpeechActivity extends Activity {
 
             imageViewMicro.setImageDrawable(Util.getImageViewByName(getApplicationContext(), "icon_micro_off"));
             ArrayList<String> data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            for (int i = 0; i < data.size(); i++){
-                System.out.println(data.get(i));
-            }
+
             for (int i = 0; i < data.size(); i++){
                 if(data.get(i).toLowerCase().contains(bmObject.getMotRef().toLowerCase())){
                     wordImgIndice.setImageDrawable(Util.getImageViewByName(getApplicationContext(), bmObject.getImgMot()));

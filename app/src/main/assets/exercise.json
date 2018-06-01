@@ -1,17 +1,21 @@
 [
   {
+    "mot":"oiaeu",
     "graphie": "o i a e u",
     "son": "o i a e u"
   },
   {
+    "mot":"ourfei",
     "graphie": "ou r f e i",
     "son": "ou r f e i"
   },
   {
+    "mot":"sceau",
     "graphie": "sc eau",
     "son": "s o"
   },
   {
+    "mot":"marteau",
     "graphie": "m a r t eau",
     "son": "m a r t o"
   }
